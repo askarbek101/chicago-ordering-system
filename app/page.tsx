@@ -1,111 +1,258 @@
 import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs"
 import { LearnMore } from "./components/learn-more"
-import screenshotDevices from "./images/user-button@2xrl.webp"
-import signIn from "./images/sign-in@2xrl.webp"
-import verify from "./images/verify@2xrl.webp"
-import userButton2 from "./images/user-button-2@2xrl.webp"
-import signUp from "./images/sign-up@2xrl.webp"
 import logo from "./images/logo.png"
 import "./home.css"
 import Image from "next/image"
 import Link from "next/link"
 import { Footer } from "./components/footer"
+import { Header } from "./components/header"
 
-import { CARDS } from "./consts/cards"
-import { ClerkLogo } from "./components/clerk-logo"
-import { NextLogo } from "./components/next-logo"
+import heroImage from "./images/chicago-burger.jpg"
+import menuItem1 from "./images/deep-dish-burger.jpg"
+import menuItem2 from "./images/chicago-dog.jpg"
+import menuItem3 from "./images/italian-beef.jpg"
 
 export default function Home() {
   return (
     <>
-      <main className="bg-[#FAFAFA] relative">
-        <div className="w-full bg-white max-w-[75rem] mx-auto flex flex-col border-l border-r border-[#F2F2F2] row-span-3">
-          <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-px bg-[#F2F2F2]" />
-          <Image
-            alt="Device"
-            className="size-64 bg-transparent absolute left-1/2 -translate-x-[23.75rem] -top-6 h-[51.375rem] object-contain w-[39.0625rem]"
-            src={logo}
-            unoptimized
-          />
-
-          <div className="px-12 py-16 border-b border-[#F2F2F4]">
-            <div className="bg-[#F4F4F5] px-4 py-3 rounded-full inline-flex gap-4">
-              <ClerkLogo />
-              <div aria-hidden className="w-px h-6 bg-[#C7C7C8]" />
-              <NextLogo />
-            </div>
+      <Header />
+      
+      <main className="flex flex-col min-h-screen">
+        {/* Hero Section */}
+        <section className="relative h-[70vh] flex items-center">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={heroImage}
+              alt="Chicago-style burger"
+              fill
+              className="object-cover brightness-50"
+              priority
+            />
           </div>
-
-          <div className="p-10 border-b border-[#F2F2F2]">
-            <h1 className="text-5xl font-bold tracking-tight text-[#131316] relative">
-              Auth starts here
+          
+          <div className="container mx-auto px-4 z-10 text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4">
+              Chicago's Finest<br />Fast Food Experience
             </h1>
-
-            <p className="text-[#5E5F6E] pt-3 pb-6 max-w-[30rem] text-[1.0625rem] relative">
-              A simple and powerful Next.js template featuring authentication
-              and user management powered by Clerk.
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl">
+              Authentic Chicago flavors with a modern twist. Our burgers are made with 100% premium beef and fresh ingredients.
             </p>
-            <div className="relative flex gap-3">
-              <SignedIn>
-                <Link
-                  href="/dashboard"
-                  className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold"
-                >
-                  Dashboard
-                </Link>
-              </SignedIn>
+            <div className="flex flex-wrap gap-4">
+              <Link 
+                href="/menu" 
+                className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors"
+              >
+                View Menu
+              </Link>
               <SignedOut>
-                <SignInButton>
-                  <button className="px-4 py-2 rounded-full bg-[#131316] text-white text-sm font-semibold">
-                    Sign in
+                <SignInButton mode="modal">
+                  <button className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors">
+                    Order Now
                   </button>
                 </SignInButton>
               </SignedOut>
+              <SignedIn>
+                <Link 
+                  href="/order" 
+                  className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  Order Now
+                </Link>
+              </SignedIn>
             </div>
           </div>
-          <div className="flex gap-8 w-full h-[41.25rem] scale-[1.03]">
-            <div className="space-y-8 translate-y-12">
-              <Image
-                alt="Device"
-                src={signUp}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
+        </section>
+        
+        {/* Featured Menu Items */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Chicago Favorites
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Menu Item 1 */}
+              <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div className="relative h-64">
+                  <Image
+                    src={menuItem1}
+                    alt="Deep Dish Burger"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Deep Dish Burger</h3>
+                  <p className="text-gray-600 mb-4">
+                    Our signature burger inspired by Chicago's famous deep dish pizza.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-red-600">$12.99</span>
+                    <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Menu Item 2 */}
+              <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div className="relative h-64">
+                  <Image
+                    src={menuItem2}
+                    alt="Chicago Dog"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Chicago Dog</h3>
+                  <p className="text-gray-600 mb-4">
+                    All-beef hot dog with the works, just how Chicago likes it.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-red-600">$8.99</span>
+                    <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Menu Item 3 */}
+              <div className="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-105">
+                <div className="relative h-64">
+                  <Image
+                    src={menuItem3}
+                    alt="Italian Beef Sandwich"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">Italian Beef Sandwich</h3>
+                  <p className="text-gray-600 mb-4">
+                    Thinly sliced beef simmered in au jus and served on a French roll.
+                  </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-red-600">$10.99</span>
+                    <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="space-y-8 -translate-y-4">
-              <Image
-                alt="Device"
-                src={verify}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-              <Image
-                alt="Device"
-                src={userButton2}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-            </div>
-            <div className="space-y-8 -translate-y-[22.5rem]">
-              <Image
-                alt="Device"
-                src={signIn}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
-              <Image
-                alt="Device"
-                src={screenshotDevices}
-                unoptimized
-                className="flex-none rounded-xl bg-white shadow-[0_5px_15px_rgba(0,0,0,0.08),0_15px_35px_-5px_rgba(25,28,33,0.2)] ring-1 ring-gray-950/5"
-              />
+            
+            <div className="text-center mt-12">
+              <Link 
+                href="/menu" 
+                className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors inline-block"
+              >
+                View Full Menu
+              </Link>
             </div>
           </div>
-        </div>
-        <div className="absolute left-0 right-0 bottom-0 h-[18.75rem] bg-gradient-to-t from-white" />
+        </section>
+        
+        {/* About Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="md:w-1/2">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  The ChicagoGO Story
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  Founded in 2010, ChicagoGO started as a small food truck serving authentic Chicago-style fast food to hungry locals and tourists alike.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  Our commitment to quality ingredients, bold flavors, and the unmistakable Chicago food culture has made us a beloved institution in the Windy City.
+                </p>
+                <p className="text-gray-600 mb-6">
+                  Today, with multiple locations across Chicago, we continue to serve the best burgers, hot dogs, and Italian beef sandwiches with the same passion and dedication as day one.
+                </p>
+                <Link 
+                  href="/about" 
+                  className="text-red-600 font-bold hover:underline"
+                >
+                  Learn more about our story →
+                </Link>
+              </div>
+              <div className="md:w-1/2 bg-gray-100 p-8 rounded-xl">
+                <h3 className="text-2xl font-bold mb-4">Why Choose ChicagoGO?</h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>100% premium beef sourced from local farms</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Fresh ingredients delivered daily</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Authentic Chicago recipes with a modern twist</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Fast service without compromising quality</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Vegetarian and gluten-free options available</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        {/* Call to Action */}
+        <section className="py-16 bg-red-600 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Hungry Yet? Order Online Now!
+            </h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto">
+              Skip the line and order your Chicago favorites for pickup or delivery.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors">
+                    Sign In to Order
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <Link 
+                  href="/order" 
+                  className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  Start Your Order
+                </Link>
+              </SignedIn>
+              <Link 
+                href="/locations" 
+                className="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-red-600 transition-colors"
+              >
+                Find Nearest Location
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
-      <LearnMore cards={CARDS} />
-      <Footer />
     </>
   )
 }
