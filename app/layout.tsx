@@ -5,9 +5,9 @@ import { Inter, Montserrat } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: "ChicagoGO - Chicago's Finest Fast Food",
+  title: "ChicagoGO - Лучший Фастфуд Чикаго",
   description:
-    "Authentic Chicago-style burgers, hot dogs, and Italian beef sandwiches. Order online for pickup or delivery.",
+    "Аутентичные бургеры, хот-доги и сэндвичи с итальянской говядиной в стиле Чикаго. Заказывайте онлайн с самовывозом или доставкой.",
   openGraph: { images: ["/og-image.jpg"] },
 };
 

@@ -102,7 +102,7 @@ export default function CartPage() {
         <Header />
         <main className="min-h-screen bg-gray-50 py-12">
           <div className="container mx-auto px-4">
-            <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+            <h1 className="text-3xl font-bold mb-8">Ваша Корзина</h1>
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
             </div>
@@ -118,25 +118,27 @@ export default function CartPage() {
       <Header />
       <main className="min-h-screen bg-gray-50 py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-8">Your Cart</h1>
+          <h1 className="text-3xl font-bold mb-8">Ваша Корзина</h1>
           
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-              {error}
+              {error === "Failed to load cart. Please try again." ? "Не удалось загрузить корзину. Пожалуйста, попробуйте снова." :
+               error === "Failed to update item quantity. Please try again." ? "Не удалось обновить количество товара. Пожалуйста, попробуйте снова." :
+               error === "Failed to remove item. Please try again." ? "Не удалось удалить товар. Пожалуйста, попробуйте снова." : error}
             </div>
           )}
           
           {cartItems.length === 0 ? (
             <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
+              <h2 className="text-2xl font-semibold mb-4">Ваша корзина пуста</h2>
               <p className="text-gray-600 mb-6">
-                Looks like you haven't added any items to your cart yet.
+                Похоже, вы еще не добавили товары в корзину.
               </p>
               <Link 
                 href="/menu" 
                 className="px-6 py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors"
               >
-                Browse Menu
+                Просмотреть Меню
               </Link>
             </div>
           ) : (
@@ -144,7 +146,7 @@ export default function CartPage() {
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="p-6 border-b">
-                    <h2 className="text-xl font-semibold">Order Items</h2>
+                    <h2 className="text-xl font-semibold">Товары в заказе</h2>
                   </div>
                   
                   <ul className="divide-y divide-gray-200">
@@ -191,7 +193,7 @@ export default function CartPage() {
                             onClick={() => removeItem(item.id)}
                             className="text-sm text-red-600 hover:text-red-800 transition-colors"
                           >
-                            Remove
+                            Удалить
                           </button>
                         </div>
                       </li>
@@ -202,19 +204,19 @@ export default function CartPage() {
               
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
-                  <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
+                  <h2 className="text-xl font-semibold mb-4">Сводка заказа</h2>
                   
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Subtotal</span>
+                      <span className="text-gray-600">Подытог</span>
                       <span>${calculateSubtotal().toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Tax</span>
+                      <span className="text-gray-600">Налог</span>
                       <span>${calculateTax().toFixed(2)}</span>
                     </div>
                     <div className="border-t pt-3 mt-3 flex justify-between font-bold">
-                      <span>Total</span>
+                      <span>Итого</span>
                       <span>${calculateTotal().toFixed(2)}</span>
                     </div>
                   </div>
@@ -224,7 +226,7 @@ export default function CartPage() {
                     disabled={cartItems.length === 0}
                     className="w-full py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Proceed to Checkout
+                    Перейти к оформлению
                   </button>
                   
                   <div className="mt-4">
@@ -235,7 +237,7 @@ export default function CartPage() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                       </svg>
-                      Continue Shopping
+                      Продолжить покупки
                     </Link>
                   </div>
                 </div>

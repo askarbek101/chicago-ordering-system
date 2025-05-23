@@ -11,6 +11,9 @@ function formatPrice(price: string | number): string {
   return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
 }
 
+// Добавляем этот экспорт для включения динамического рендеринга
+export const dynamic = 'force-dynamic';
+
 async function getMenuData() {
   const categories = await categoryDb.getAllCategories();
   const foods = await foodDb.getAllFood();
@@ -20,43 +23,43 @@ async function getMenuData() {
 export default async function MenuPage() {
   const { categories, foods } = await getMenuData();
   
-  // Get unique categories including "All"
-  const categoryNames = ["All", ...categories.map(cat => cat.name)];
+  // Получаем уникальные категории, включая "Все"
+  const categoryNames = ["Все", ...categories.map(cat => cat.name)];
 
   return (
     <>
       <Header />
       
       <main className="min-h-screen bg-gray-50">
-        {/* Hero Banner */}
+        {/* Баннер */}
         <section className="bg-red-600 text-white py-12">
           <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our Menu</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Наше Меню</h1>
             <p className="text-xl max-w-2xl mx-auto">
-              Authentic Chicago flavors made with premium ingredients and served with pride.
+              Аутентичные чикагские вкусы, приготовленные из премиальных ингредиентов и поданные с гордостью.
             </p>
           </div>
         </section>
         
-        {/* Menu Content */}
+        {/* Содержимое меню */}
         <section className="py-12">
           <div className="container mx-auto px-4">
             <MenuContent foods={foods} categories={categories} />
           </div>
         </section>
         
-        {/* Call to Action */}
+        {/* Призыв к действию */}
         <section className="py-16 bg-gray-100">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Place Your Order?</h2>
+            <h2 className="text-3xl font-bold mb-6">Готовы сделать заказ?</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto">
-              Sign in to start your order for pickup or delivery.
+              Войдите, чтобы начать оформление заказа на самовывоз или доставку.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <SignedOut>
                 <SignInButton mode="modal">
                   <button className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors">
-                    Sign In to Order
+                    Войти для заказа
                   </button>
                 </SignInButton>
               </SignedOut>
@@ -65,14 +68,14 @@ export default async function MenuPage() {
                   href="/order" 
                   className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors"
                 >
-                  Start Your Order
+                  Начать заказ
                 </Link>
               </SignedIn>
               <Link 
                 href="/locations" 
                 className="px-8 py-3 bg-transparent border-2 border-red-600 text-red-600 font-bold rounded-full hover:bg-red-50 transition-colors"
               >
-                Find Nearest Location
+                Найти ближайший ресторан
               </Link>
             </div>
           </div>

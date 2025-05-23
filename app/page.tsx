@@ -32,22 +32,22 @@ export default function Home() {
           
           <div className="container mx-auto px-4 z-10 text-white">
             <h1 className="text-5xl md:text-7xl font-bold mb-4">
-              Chicago's Finest<br />Fast Food Experience
+              Лучший Фастфуд<br />Чикаго
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl">
-              Authentic Chicago flavors with a modern twist. Our burgers are made with 100% premium beef and fresh ingredients.
+              Аутентичные вкусы Чикаго в современном исполнении. Наши бургеры готовятся из 100% премиальной говядины и свежих ингредиентов.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link 
                 href="/menu" 
                 className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors"
               >
-                View Menu
+                Посмотреть Меню
               </Link>
               <SignedOut>
                 <SignInButton mode="modal">
                   <button className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors">
-                    Order Now
+                    Заказать Сейчас
                   </button>
                 </SignInButton>
               </SignedOut>
@@ -56,7 +56,7 @@ export default function Home() {
                   href="/order" 
                   className="px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  Order Now
+                  Заказать Сейчас
                 </Link>
               </SignedIn>
             </div>
@@ -67,7 +67,7 @@ export default function Home() {
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Chicago Favorites
+              Фавориты Чикаго
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -76,20 +76,20 @@ export default function Home() {
                 <div className="relative h-64">
                   <Image
                     src={menuItem1}
-                    alt="Deep Dish Burger"
+                    alt="Бургер Дип Диш"
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Deep Dish Burger</h3>
+                  <h3 className="text-xl font-bold mb-2">Бургер Дип Диш</h3>
                   <p className="text-gray-600 mb-4">
-                    Our signature burger inspired by Chicago's famous deep dish pizza.
+                    Наш фирменный бургер, вдохновленный знаменитой пиццей Дип Диш из Чикаго.
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-red-600">$12.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
-                      Add to Cart
+                      В Корзину
                     </button>
                   </div>
                 </div>
@@ -161,13 +161,13 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="md:w-1/2">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  The ChicagoGO Story
+                  История ChicagoGO
                 </h2>
                 <p className="text-gray-600 mb-4">
-                  Founded in 2010, ChicagoGO started as a small food truck serving authentic Chicago-style fast food to hungry locals and tourists alike.
+                  Основанный в 2010 году, ChicagoGO начинался как небольшой фудтрак, подающий аутентичный фастфуд в стиле Чикаго местным жителям и туристам.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  Our commitment to quality ingredients, bold flavors, and the unmistakable Chicago food culture has made us a beloved institution in the Windy City.
+                  Наша приверженность качественным ингредиентам, ярким вкусам и неповторимой культуре еды Чикаго сделала нас любимым заведением в Городе Ветров.
                 </p>
                 <p className="text-gray-600 mb-6">
                   Today, with multiple locations across Chicago, we continue to serve the best burgers, hot dogs, and Italian beef sandwiches with the same passion and dedication as day one.

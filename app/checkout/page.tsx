@@ -7,7 +7,7 @@ import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import Link from "next/link";
 
-// Define types
+// Определение типов
 type CartItem = {
   id: string;
   name: string;
@@ -18,53 +18,53 @@ type CartItem = {
 
 type PaymentMethod = "credit_card" | "cash_on_delivery";
 
-// Add new types for form validation
+// Добавление новых типов для валидации формы
 type PaymentFormData = {
-  cardNumber: string;
-  cardExpiry: string;
-  cardCvc: string;
-  deliveryAddress: string;
-  paymentMethod: "credit_card" | "cash_on_delivery";
+  cardNumber: string; // номер карты
+  cardExpiry: string; // срок действия карты
+  cardCvc: string; // CVC-код
+  deliveryAddress: string; // адрес доставки
+  paymentMethod: "credit_card" | "cash_on_delivery"; // способ оплаты
 };
 
 type FormErrors = {
-  cardNumber?: string;
-  cardExpiry?: string;
-  cardCvc?: string;
-  deliveryAddress?: string;
-  paymentMethod?: string;
+  cardNumber?: string; // ошибка номера карты
+  cardExpiry?: string; // ошибка срока действия
+  cardCvc?: string; // ошибка CVC
+  deliveryAddress?: string; // ошибка адреса
+  paymentMethod?: string; // ошибка способа оплаты
 };
 
 export default function CheckoutPage() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
   
-  // State for cart items, delivery address, payment method, and order processing
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [deliveryAddress, setDeliveryAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("credit_card");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
-  const [cardCvc, setCardCvc] = useState("");
-  const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState("");
+  // Состояния для товаров корзины, адреса доставки, способа оплаты и обработки заказа
+  const [cartItems, setCartItems] = useState<CartItem[]>([]); // товары в корзине
+  const [totalPrice, setTotalPrice] = useState(0); // общая стоимость
+  const [deliveryAddress, setDeliveryAddress] = useState(""); // адрес доставки
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("credit_card"); // способ оплаты
+  const [isProcessing, setIsProcessing] = useState(false); // идет обработка
+  const [error, setError] = useState(""); // ошибка
+  const [cardNumber, setCardNumber] = useState(""); // номер карты
+  const [cardExpiry, setCardExpiry] = useState(""); // срок действия карты
+  const [cardCvc, setCardCvc] = useState(""); // CVC-код
+  const [orderComplete, setOrderComplete] = useState(false); // заказ завершен
+  const [orderId, setOrderId] = useState(""); // ID заказа
 
-  // Add new state variables
-  const [savedAddresses, setSavedAddresses] = useState<Array<{ id: string, address: string }>>([]);
-  const [selectedAddressId, setSelectedAddressId] = useState<string>("");
-  const [isAddingNewAddress, setIsAddingNewAddress] = useState(false);
+  // Добавление новых состояний
+  const [savedAddresses, setSavedAddresses] = useState<Array<{ id: string, address: string }>>([]); // сохраненные адреса
+  const [selectedAddressId, setSelectedAddressId] = useState<string>(""); // выбранный адрес
+  const [isAddingNewAddress, setIsAddingNewAddress] = useState(false); // добавление нового адреса
 
-  // Add new state for form validation
-  const [formErrors, setFormErrors] = useState<FormErrors>({});
-  const [isFormValid, setIsFormValid] = useState(false);
+  // Состояния для валидации формы
+  const [formErrors, setFormErrors] = useState<FormErrors>({}); // ошибки формы
+  const [isFormValid, setIsFormValid] = useState(false); // форма валидна
 
-  // Separate state for new address input
-  const [newAddress, setNewAddress] = useState("");
+  // Отдельное состояние для ввода нового адреса
+  const [newAddress, setNewAddress] = useState(""); // новый адрес
 
-  // Fetch cart items from localStorage on component mount
+  // Получение товаров корзины из localStorage при загрузке компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedCart = localStorage.getItem("cart");
@@ -72,7 +72,7 @@ export default function CheckoutPage() {
         const parsedCart = JSON.parse(storedCart);
         setCartItems(parsedCart);
         
-        // Calculate total price
+        // Подсчет общей стоимости
         const total = parsedCart.reduce(
           (sum: number, item: CartItem) => sum + item.price * item.quantity,
           0
@@ -81,7 +81,7 @@ export default function CheckoutPage() {
       }
     }
     
-    // Redirect if not logged in
+    // Перенаправление если пользователь не авторизован
     if (isLoaded && !user) {
       router.push("/");
     }

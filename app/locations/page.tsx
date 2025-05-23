@@ -30,112 +30,112 @@ interface Review {
 }
 
 const locations: Location[] = [
-  // Kazakhstan Locations
+  // Локации в Казахстане
   {
     id: "almaty1",
-    city: "Almaty",
-    country: "Kazakhstan",
-    address: "123 Abai Avenue, Medeu District",
+    city: "Алматы",
+    country: "Казахстан",
+    address: "пр. Абая 123, Медеуский район",
     phone: "+7 (727) 123-4567",
-    hours: "10:00 AM - 10:00 PM",
+    hours: "10:00 - 22:00",
     rating: 4.8,
     reviews: [
       {
         id: "rev1",
-        userName: "Azamat K.",
+        userName: "Азамат К.",
         rating: 5,
-        comment: "Best Chicago-style food in Almaty! The Deep Dish Burger is amazing.",
+        comment: "Лучшая чикагская еда в Алматы! Бургер Deep Dish просто потрясающий.",
         date: "2024-03-15"
       }
     ]
   },
   {
     id: "astana1",
-    city: "Astana",
-    country: "Kazakhstan",
-    address: "45 Turan Avenue, Esil District",
+    city: "Астана",
+    country: "Казахстан",
+    address: "пр. Туран 45, район Есиль",
     phone: "+7 (717) 234-5678",
-    hours: "10:00 AM - 10:00 PM",
+    hours: "10:00 - 22:00",
     rating: 4.7,
     reviews: [
       {
         id: "rev2",
-        userName: "Dana S.",
+        userName: "Дана С.",
         rating: 5,
-        comment: "Great atmosphere and authentic Chicago flavors!",
+        comment: "Отличная атмосфера и аутентичные чикагские вкусы!",
         date: "2024-03-10"
       }
     ]
   },
   {
     id: "shymkent1",
-    city: "Shymkent",
-    country: "Kazakhstan",
-    address: "78 Tauke Khan Avenue",
+    city: "Шымкент",
+    country: "Казахстан",
+    address: "пр. Тауке хана 78",
     phone: "+7 (725) 345-6789",
-    hours: "10:00 AM - 10:00 PM",
+    hours: "10:00 - 22:00",
     rating: 4.6,
     reviews: [
       {
         id: "rev3",
-        userName: "Yerlan M.",
+        userName: "Ерлан М.",
         rating: 4,
-        comment: "Love their Italian Beef Sandwich!",
+        comment: "Обожаю их сэндвич с итальянской говядиной!",
         date: "2024-03-12"
       }
     ]
   },
   {
     id: "aktau1",
-    city: "Aktau",
-    country: "Kazakhstan",
-    address: "15 Microdistrict 14",
+    city: "Актау",
+    country: "Казахстан",
+    address: "14 микрорайон, 15",
     phone: "+7 (729) 456-7890",
-    hours: "10:00 AM - 10:00 PM",
+    hours: "10:00 - 22:00",
     rating: 4.5,
     reviews: [
       {
         id: "rev4",
-        userName: "Aisha B.",
+        userName: "Айша Б.",
         rating: 5,
-        comment: "Finally, real Chicago hot dogs in Aktau!",
+        comment: "Наконец-то, настоящие чикагские хот-доги в Актау!",
         date: "2024-03-08"
       }
     ]
   },
-  // US Locations
+  // Локации в США
   {
     id: "chicago1",
-    city: "Chicago",
-    country: "United States",
+    city: "Чикаго",
+    country: "США",
     address: "1234 N Lincoln Ave, Chicago, IL 60614",
     phone: "(312) 555-0123",
-    hours: "10:00 AM - 11:00 PM",
+    hours: "10:00 - 23:00",
     rating: 4.9,
     reviews: [
       {
         id: "rev5",
-        userName: "Mike R.",
+        userName: "Майк Р.",
         rating: 5,
-        comment: "The original location - still the best!",
+        comment: "Оригинальное место - до сих пор лучшее!",
         date: "2024-03-14"
       }
     ]
   },
   {
     id: "chicago2",
-    city: "Chicago",
-    country: "United States",
+    city: "Чикаго",
+    country: "США",
     address: "789 W Madison St, Chicago, IL 60661",
     phone: "(312) 555-0124",
-    hours: "10:00 AM - 11:00 PM",
+    hours: "10:00 - 23:00",
     rating: 4.8,
     reviews: [
       {
         id: "rev6",
-        userName: "Sarah L.",
+        userName: "Сара Л.",
         rating: 5,
-        comment: "West Loop location is fantastic!",
+        comment: "Локация в West Loop просто фантастическая!",
         date: "2024-03-13"
       }
     ]
@@ -155,9 +155,9 @@ export default function LocationsPage() {
   const handleAddReview = (locationId: string) => {
     if (!user || !newReview.comment) return;
 
-    // In a real app, this would be an API call
-    console.log("Adding review for location:", locationId, newReview);
-    // Reset form
+    // В реальном приложении здесь был бы API-запрос
+    console.log("Добавление отзыва для локации:", locationId, newReview);
+    // Сброс формы
     setNewReview({ rating: 5, comment: "" });
   };
 
@@ -166,12 +166,12 @@ export default function LocationsPage() {
       <Header />
       
       <main className="min-h-screen bg-gray-50">
-        {/* Hero Section */}
+        {/* Секция Hero */}
         <section className="relative h-[40vh] flex items-center">
           <div className="absolute inset-0 z-0">
             <Image
               src={storeImage}
-              alt="ChicagoGO Store Front"
+              alt="Фасад ресторана ChicagoGO"
               fill
               className="object-cover brightness-50"
               priority
@@ -180,15 +180,15 @@ export default function LocationsPage() {
           
           <div className="container mx-auto px-4 z-10 text-white">
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
-              Our Locations
+              Наши рестораны
             </h1>
             <p className="text-xl max-w-2xl">
-              Find your nearest ChicagoGO restaurant in Kazakhstan and the United States.
+              Найдите ближайший ресторан ChicagoGO в Казахстане и США.
             </p>
           </div>
         </section>
 
-        {/* Locations Filter */}
+        {/* Фильтр локаций */}
         <section className="py-8 bg-white">
           <div className="container mx-auto px-4">
             <div className="flex justify-center gap-4 mb-8">
@@ -200,33 +200,33 @@ export default function LocationsPage() {
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
-                All Locations
+                Все рестораны
               </button>
               <button
-                onClick={() => setSelectedCountry("Kazakhstan")}
+                onClick={() => setSelectedCountry("Казахстан")}
                 className={`px-6 py-2 rounded-full ${
-                  selectedCountry === "Kazakhstan"
+                  selectedCountry === "Казахстан"
                     ? "bg-red-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
-                Kazakhstan
+                Казахстан
               </button>
               <button
-                onClick={() => setSelectedCountry("United States")}
+                onClick={() => setSelectedCountry("США")}
                 className={`px-6 py-2 rounded-full ${
-                  selectedCountry === "United States"
+                  selectedCountry === "США"
                     ? "bg-red-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
-                United States
+                США
               </button>
             </div>
           </div>
         </section>
 
-        {/* Locations Grid */}
+        {/* Сетка локаций */}
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -259,7 +259,7 @@ export default function LocationsPage() {
                     </div>
 
                     <div className="border-t pt-4">
-                      <h3 className="font-semibold mb-2">Reviews</h3>
+                      <h3 className="font-semibold mb-2">Отзывы</h3>
                       <div className="space-y-4">
                         {location.reviews.map((review) => (
                           <div key={review.id} className="border-b pb-4">
@@ -278,7 +278,7 @@ export default function LocationsPage() {
                       <SignedIn>
                         <div className="mt-4">
                           <textarea
-                            placeholder="Write your review..."
+                            placeholder="Напишите ваш отзыв..."
                             className="w-full p-2 border rounded-md"
                             value={newReview.comment}
                             onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
@@ -291,7 +291,7 @@ export default function LocationsPage() {
                             >
                               {[5, 4, 3, 2, 1].map((num) => (
                                 <option key={num} value={num}>
-                                  {"★".repeat(num)} {num} stars
+                                  {"★".repeat(num)} {num} звезд
                                 </option>
                               ))}
                             </select>
@@ -299,7 +299,7 @@ export default function LocationsPage() {
                               onClick={() => handleAddReview(location.id)}
                               className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
                             >
-                              Add Review
+                              Добавить отзыв
                             </button>
                           </div>
                         </div>
@@ -308,7 +308,7 @@ export default function LocationsPage() {
                         <div className="mt-4 text-center">
                           <SignInButton mode="modal">
                             <button className="text-red-600 hover:underline">
-                              Sign in to leave a review
+                              Войдите, чтобы оставить отзыв
                             </button>
                           </SignInButton>
                         </div>
