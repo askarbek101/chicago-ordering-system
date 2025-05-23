@@ -339,7 +339,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="text-right">
                       <p className="font-bold text-red-600">
-                        ${order.total_price.toFixed(2)}
+                        ${Number(order.total_price).toFixed(2)}
                       </p>
                       <p className="text-sm text-gray-600">
                         Status: {order.status}

@@ -196,10 +196,10 @@ export const userDb = {
 // CRUD functions for orders
 export const orderDb = {
   // Create a new order with delivery address and payment method and cartid and userid and status and total price and createdat and updatedat
-  createOrder: async (deliveryAddress: string, paymentMethod: string, cartId: string, userEmail: string, status: string, totalPrice: number, createdAt: string, updatedAt: string) => {
+  createOrder: async (deliveryAddress: string, paymentMethod: string, userEmail: string, status: string, totalPrice: number, createdAt: string, updatedAt: string) => {
     const result = await pool.query(
-      'INSERT INTO orders (delivery_address, payment_method, cart_id, user_email, status, total_price, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [deliveryAddress, paymentMethod, cartId, userEmail, status, totalPrice, createdAt, updatedAt]
+      'INSERT INTO orders (delivery_address, payment_method, user_email, status, total_price, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [deliveryAddress, paymentMethod, userEmail, status, totalPrice, createdAt, updatedAt]
     );
     return result.rows[0];
   },

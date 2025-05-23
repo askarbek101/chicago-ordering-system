@@ -1,11 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [ {
+    remotePatterns: [
+      {
         protocol: 'https',
-        hostname: 'img.clerk.com',
-        port: '',        
-      },],
+        hostname: 'images.immediate.co.uk',
+        pathname: '/production/volatile/sites/**',
+      },
+      // Add other image domains as needed
+    ],
   },
 };
 

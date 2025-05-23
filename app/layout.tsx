@@ -2,6 +2,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: "ChicagoGO - Chicago's Finest Fast Food",
@@ -46,6 +47,7 @@ export default function RootLayout({
       >
         <body className="font-sans min-h-screen flex flex-col antialiased">
           {children}
+          <Toaster position="bottom-center" />
         </body>
       </ClerkProvider>
     </html>

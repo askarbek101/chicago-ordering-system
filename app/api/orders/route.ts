@@ -8,13 +8,12 @@ export async function POST(request: NextRequest) {
       userEmail,
       deliveryAddress, 
       paymentMethod, 
-      cartId, 
       status, 
       totalPrice 
     } = await request.json();
 
     // Validate required fields
-    if (!deliveryAddress || !paymentMethod || !cartId || !totalPrice) {
+    if (!deliveryAddress || !paymentMethod || !totalPrice) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -23,7 +22,6 @@ export async function POST(request: NextRequest) {
     const order = await orderDb.createOrder(
       deliveryAddress,
       paymentMethod,
-      cartId,
       userEmail,
       status || 'pending', // Default status if not provided
       totalPrice,

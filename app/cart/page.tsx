@@ -1,23 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useUser } from "@clerk/nextjs";
 import { Header } from "../components/header";
 import { Footer } from "../components/footer";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-// Define types
-interface CartItem {
-  id: string;
-  cart_id: string;
-  food_id: string;
-  quantity: number;
-  created_at: string;
-  updated_at: string;
-  food?: MenuItem;
-}
+import { cartService } from "../utils/cartService";
 
 interface MenuItem {
   id: string;
@@ -30,120 +19,40 @@ interface MenuItem {
   glutenFree: boolean;
 }
 
-interface Cart {
+interface CartItem {
   id: string;
-  user_email: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
 }
 
 export default function CartPage() {
-  const { user, isSignedIn, isLoaded } = useUser();
   const router = useRouter();
-  const [cart, setCart] = useState<Cart | null>(null);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    // Redirect if not signed in
-    if (isLoaded && !isSignedIn) {
-      router.push("/");
-    }
-
-    if (isSignedIn && user) {
-      fetchCart();
-    }
-  }, [isLoaded, isSignedIn, user]);
-
-  const fetchCart = async () => {
+  const loadCart = async () => {
     try {
-      setLoading(true);
-      // Get active cart for user
-      const userEmail = user?.primaryEmailAddress?.emailAddress;
-      const cartResponse = await fetch(`/api/carts?userEmail=${encodeURIComponent(userEmail || '')}`);
-
-      if (!cartResponse.ok) {
-        if (cartResponse.status === 404) {
-          // No active cart, create one
-          const createCartResponse = await fetch("/api/carts", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userEmail: user?.primaryEmailAddress?.emailAddress,
-            }),
-          });
-
-          if (createCartResponse.ok) {
-            const newCart = await createCartResponse.json();
-            setCart(newCart);
-            setCartItems([]);
-          } else {
-            throw new Error("Failed to create cart");
-          }
-        } else {
-          throw new Error("Failed to fetch cart");
-        }
-      } else {
-        const cartData = await cartResponse.json();
-        setCart(cartData);
-        
-        // Fetch cart items
-        const itemsResponse = await fetch(`/api/cart_items?cartId=${cartData.id}`);
-        if (itemsResponse.ok) {
-          const items = await itemsResponse.json();
-          setCartItems(items);
-          
-          // Fetch menu items to get details for each cart item
-          const menuResponse = await fetch("/api/menu");
-          if (menuResponse.ok) {
-            const menu = await menuResponse.json();
-            setMenuItems(menu);
-            
-            // Enrich cart items with menu item details
-            const enrichedItems = items.map((item: CartItem) => {
-              const menuItem = menu.find((m: MenuItem) => m.id === item.food_id);
-              return { ...item, food: menuItem };
-            });
-            
-            setCartItems(enrichedItems);
-          }
-        }
-      }
+      const globalCart = cartService.getCart();
+      setCartItems(globalCart);
     } catch (err) {
-      console.error("Error fetching cart:", err);
-      setError("Failed to load your cart. Please try again.");
+      console.error("Error loading cart:", err);
+      setError("Failed to load cart. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const updateQuantity = async (itemId: string, newQuantity: number) => {
+  const updateQuantity = (itemId: string, newQuantity: number) => {
     if (newQuantity < 1) return;
     
     try {
-      const response = await fetch("/api/cart_items", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: itemId,
-          quantity: newQuantity,
-        }),
-      });
-      
-      if (response.ok) {
-        // Update local state
-        setCartItems(
-          cartItems.map((item) => 
-            item.id === itemId ? { ...item, quantity: newQuantity } : item
-          )
-        );
+      const item = cartItems.find(item => item.id === itemId);
+      if (item) {
+        cartService.updateQuantity(itemId, newQuantity);
+        setCartItems(cartService.getCart());
       }
     } catch (err) {
       console.error("Error updating quantity:", err);
@@ -151,16 +60,10 @@ export default function CartPage() {
     }
   };
 
-  const removeItem = async (itemId: string) => {
+  const removeItem = (itemId: string) => {
     try {
-      const response = await fetch(`/api/cart_items?id=${itemId}`, {
-        method: "DELETE",
-      });
-      
-      if (response.ok) {
-        // Remove item from local state
-        setCartItems(cartItems.filter((item) => item.id !== itemId));
-      }
+      cartService.removeFromCart(itemId);
+      setCartItems(cartService.getCart());
     } catch (err) {
       console.error("Error removing item:", err);
       setError("Failed to remove item. Please try again.");
@@ -168,24 +71,30 @@ export default function CartPage() {
   };
 
   const calculateSubtotal = () => {
-    return cartItems.reduce((total, item) => {
-      return total + (item.food?.price || 0) * item.quantity;
+    const subtotal = cartItems.reduce((total, item) => {
+      return total + (item.price * item.quantity);
     }, 0);
+    return Number(subtotal.toFixed(2));
   };
 
   const calculateTax = () => {
-    return calculateSubtotal() * 0.0825; // 8.25% tax rate
+    const tax = calculateSubtotal() * 0.0825; // 8.25% tax rate
+    return Number(tax.toFixed(2));
   };
 
   const calculateTotal = () => {
-    return calculateSubtotal() + calculateTax();
+    const total = calculateSubtotal() + calculateTax();
+    return Number(total.toFixed(2));
   };
 
-  const handleCheckout = async () => {
-    if (!cart || cartItems.length === 0) return;
-    
+  const handleCheckout = () => {
+    if (cartItems.length === 0) return;
     router.push("/checkout");
   };
+
+  useEffect(() => {
+    loadCart();
+  }, []);
 
   if (loading) {
     return (
@@ -232,7 +141,6 @@ export default function CartPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Cart Items */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden">
                   <div className="p-6 border-b">
@@ -242,21 +150,24 @@ export default function CartPage() {
                   <ul className="divide-y divide-gray-200">
                     {cartItems.map((item) => (
                       <li key={item.id} className="p-6 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-                        {item.food?.image && (
+                        {item.image && (
                           <div className="w-24 h-24 relative flex-shrink-0">
                             <Image
-                              src={item.food.image}
-                              alt={item.food.name}
+                              src={item.image}
+                              alt={item.name}
                               fill
+                              sizes="(max-width: 96px) 100vw, 96px"
+                              priority
                               className="object-cover rounded-md"
                             />
                           </div>
                         )}
                         
                         <div className="flex-grow">
-                          <h3 className="font-medium text-lg">{item.food?.name}</h3>
-                          <p className="text-gray-600 text-sm mb-2">{item.food?.description}</p>
-                          <p className="font-bold text-red-600">${item.food?.price.toFixed(2)}</p>
+                          <h3 className="font-medium text-lg">{item.name}</h3>
+                          <p className="font-bold text-red-600">
+                            ${Number(item.price).toFixed(2)}
+                          </p>
                         </div>
                         
                         <div className="flex flex-col items-end gap-3">
@@ -289,7 +200,6 @@ export default function CartPage() {
                 </div>
               </div>
               
-              {/* Order Summary */}
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-lg shadow-md p-6 sticky top-24">
                   <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
