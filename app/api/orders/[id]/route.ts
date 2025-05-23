@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { orderDb } from '../../db/database';
 
 // Update order status
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PATCH(request: NextRequest) {
   try {
-    const { id } = params;
+    const id = request.url.split('/').pop();
 
     if (!id) {
       return NextResponse.json({ error: 'Order ID is required' }, { status: 400 });

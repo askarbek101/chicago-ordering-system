@@ -33,7 +33,7 @@ export async function PUT(
   { params }: { params: { email: string } }
 ) {
   try {
-    const { email } = params;
+    const { email } = await params;
     const updateData = await request.json();
     
     if (!email) {

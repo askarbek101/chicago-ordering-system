@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { deliveryDb } from '../../../db/database';
 
 // GET endpoint to fetch deliveries by user email
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const userEmail = params.id;
+    const userEmail = request.url.split('/').pop();
     
     if (!userEmail) {
       return NextResponse.json(

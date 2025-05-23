@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { foodDb } from '../../db/database';
 
 // GET /api/food/[id] - Get a food item by ID
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const id = params.id;
+    const id = request.url.split('/').pop();
     const food = await foodDb.getFoodById(id);
     
     if (!food) {
@@ -28,12 +25,9 @@ export async function GET(
 }
 
 // PUT /api/food/[id] - Update a food item
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest) {
   try {
-    const id = params.id;
+    const id = request.url.split('/').pop();
     const { name, description, image, price, categoryId } = await request.json();
     
     // Validate required fields
@@ -73,12 +67,9 @@ export async function PUT(
 }
 
 // DELETE /api/food/[id] - Delete a food item
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest) {
   try {
-    const id = params.id;
+    const id = request.url.split('/').pop();
     
     // Check if food exists
     const existingFood = await foodDb.getFoodById(id);

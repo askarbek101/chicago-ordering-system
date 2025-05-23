@@ -2,19 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { userDb } from '../../db/database';
 
 // GET user by ID
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const id = params.id;
+    const id = request.url.split('/').pop();
     
     if (!id) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
     
-    // Note: You'll need to add a getUserById function to your userDb
-    // This is just a placeholder assuming you'll add that function
     const user = await userDb.getUserByEmail(id); // Replace with getUserById when available
     
     if (!user) {
@@ -27,13 +22,11 @@ export async function GET(
     return NextResponse.json({ error: 'Failed to fetch user by ID' }, { status: 500 });
   }
 }
+
 // DELETE a specific user
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest) {
   try {
-    const id = params.id;
+    const id = request.url.split('/').pop();
     
     if (!id) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
