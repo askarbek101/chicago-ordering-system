@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { userDb } from '../../../db/database';
 
 // GET user by email
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { email: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const { email } = await params;
+    const email = request.url.split('/').pop();
     
     if (!email) {
       return NextResponse.json({ error: 'Email parameter is required' }, { status: 400 });
@@ -28,12 +25,12 @@ export async function GET(
 
 
 // PUT update a specific user
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { email: string } }
-) {
-  try {
-    const { email } = await params;
+export async function PUT(request: NextRequest) {
+  try {    
+    const email = request.url.split('/').pop();
+    if (!email) {
+      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+    }
     const updateData = await request.json();
     
     if (!email) {

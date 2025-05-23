@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { userDb } from '../../../db/database';
 
 // GET users by role
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { role: string } }
-) {
+export async function GET(request: NextRequest) {
   try {
-    const role = params.role;
+    const role = request.url.split('/').pop();
     
     if (!role) {
       return NextResponse.json({ error: 'Role parameter is required' }, { status: 400 });

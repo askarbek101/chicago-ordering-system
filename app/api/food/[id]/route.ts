@@ -5,6 +5,9 @@ import { foodDb } from '../../db/database';
 export async function GET(request: NextRequest) {
   try {
     const id = request.url.split('/').pop();
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
     const food = await foodDb.getFoodById(id);
     
     if (!food) {
@@ -39,6 +42,9 @@ export async function PUT(request: NextRequest) {
     }
     
     // Check if food exists
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
     const existingFood = await foodDb.getFoodById(id);
     if (!existingFood) {
       return NextResponse.json(
@@ -70,7 +76,9 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const id = request.url.split('/').pop();
-    
+    if (!id) {
+      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
     // Check if food exists
     const existingFood = await foodDb.getFoodById(id);
     if (!existingFood) {
