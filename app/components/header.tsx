@@ -30,9 +30,6 @@ export function Header() {
           <Link href="/about" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
             About Us
           </Link>
-          <Link href="/deals" className="text-gray-700 hover:text-red-600 font-medium transition-colors">
-            Deals
-          </Link>
         </nav>
 
         {/* Auth and Cart Buttons */}

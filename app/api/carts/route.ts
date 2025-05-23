@@ -32,7 +32,8 @@ export async function POST(request: NextRequest) {
 // Get the last non-completed cart for the current user
 export async function GET(request: NextRequest) {
   try {
-    const { userEmail } = await request.json();
+    const { searchParams } = new URL(request.url);
+    const userEmail = searchParams.get('userEmail');
 
     if (!userEmail) {
       return NextResponse.json({ error: 'User email is required' }, { status: 400 });

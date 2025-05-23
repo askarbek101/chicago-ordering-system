@@ -4,7 +4,7 @@ import { addressDb } from '../db/database';
 // GET endpoint to fetch all addresses for the authenticated user
 export async function GET(req: NextRequest) {
   try {
-    const { userEmail } = await req.json();
+    const userEmail = req.nextUrl.searchParams.get('userEmail');
 
     if (!userEmail) {
       return NextResponse.json({ error: 'User email is required' }, { status: 400 });

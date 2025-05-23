@@ -27,38 +27,6 @@ export async function GET(
     return NextResponse.json({ error: 'Failed to fetch user by ID' }, { status: 500 });
   }
 }
-
-// PUT update a specific user
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const id = params.id;
-    const { email, role } = await request.json();
-    
-    if (!id) {
-      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
-    }
-    
-    if (!email || !role) {
-      return NextResponse.json({ error: 'Email and role are required' }, { status: 400 });
-    }
-    
-    const now = new Date().toISOString();
-    const updatedUser = await userDb.updateUser(id, email, role, now, now);
-    
-    if (!updatedUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-    
-    return NextResponse.json(updatedUser, { status: 200 });
-  } catch (error) {
-    console.error('Error updating user:', error);
-    return NextResponse.json({ error: 'Failed to update user' }, { status: 500 });
-  }
-}
-
 // DELETE a specific user
 export async function DELETE(
   request: NextRequest,

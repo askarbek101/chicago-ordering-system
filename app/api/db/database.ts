@@ -119,10 +119,10 @@ export const categoryDb = {
 // CRUD functions for users
 export const userDb = {
   // Create a new user
-  createUser: async (email: string, image: string, role: string, createdAt: string, updatedAt: string) => {
+  createUser: async (email: string, firstName: string, lastName: string, image: string, role: string, createdAt: string, updatedAt: string) => {
     const result = await pool.query(
-      'INSERT INTO users (email, image, role, phone, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [email, image, role, "", createdAt, updatedAt]
+      'INSERT INTO users (email, first_name, last_name, image, role, phone, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      [email, firstName, lastName, image, role, "", createdAt, updatedAt]
     );
     return result.rows[0];
   },
@@ -141,15 +141,53 @@ export const userDb = {
     await pool.query('DELETE FROM users WHERE id = $1', [id]);
   },
   // Update a user
-  updateUser: async (id: string, email: string, role: string, createdAt: string, updatedAt: string) => {
-    const result = await pool.query(
-      'UPDATE users SET email = $1, role = $2, created_at = $3, updated_at = $4 WHERE id = $5 RETURNING *',
-      [email, role, createdAt, updatedAt, id]
-    );
+  updateUser: async (email: string, firstName: string | null, lastName: string | null, image: string | null, role: string | null) => {
+    let updateFields: string[] = [];
+    let values: any[] = [];
+    let paramCount = 1;
+
+    if (firstName !== null) {
+      updateFields.push(`first_name = $${paramCount}`);
+      values.push(firstName);
+      paramCount++;
+    }
+    if (lastName !== null) {
+      updateFields.push(`last_name = $${paramCount}`);
+      values.push(lastName);
+      paramCount++;
+    }
+    if (image !== null) {
+      updateFields.push(`image = $${paramCount}`);
+      values.push(image);
+      paramCount++;
+    }
+    if (role !== null) {
+      updateFields.push(`role = $${paramCount}`);
+      values.push(role);
+      paramCount++;
+    }
+
+    const now = new Date().toISOString();
+    updateFields.push(`updated_at = $${paramCount}`);
+    values.push(now);
+    paramCount++;
+
+    // Add email to values array for WHERE clause
+    values.push(email);
+
+    const query = `
+      UPDATE users 
+      SET ${updateFields.join(', ')} 
+      WHERE email = $${paramCount} 
+      RETURNING *
+    `;
+
+    const result = await pool.query(query, values);
     return result.rows[0];
   },
   // Get a user by email
   getUserByEmail: async (email: string) => {
+    console.log(email);
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     return result.rows[0];
   },
