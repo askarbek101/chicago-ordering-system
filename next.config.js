@@ -4,12 +4,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.immediate.co.uk',
-        pathname: '/production/volatile/sites/**',
+        hostname: '**',
       },
-      // Add other image domains as needed
+      {
+        protocol: 'http',
+        hostname: '**',
+      }
     ],
-    domains: ['images.immediate.co.uk'],
   },
   experimental: {
     serverActions: true,

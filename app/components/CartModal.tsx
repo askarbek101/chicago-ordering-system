@@ -110,91 +110,87 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
   if (!isOpen) return null;
 
   return (
-    <>
+    <div 
+      className={`fixed inset-0 z-50 ${isOpen ? 'block' : 'hidden'}`}
+    >
       {/* Backdrop */}
       <div 
-        className="fixed inset-0 bg-black opacity-50 z-40" 
+        className="fixed inset-0 bg-black bg-opacity-50"
         onClick={onClose}
       />
       
       {/* Modal */}
-      <div className="fixed right-4 top-16 w-96 z-50 bg-white rounded-lg shadow-xl">
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-bold">Your Cart</h2>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+      <div className={`
+        fixed md:top-1/2 md:-translate-y-1/2
+        top-0 left-0 md:right-4 md:left-auto
+        w-[85%] max-w-[360px] max-h-[85vh]
+        bg-white shadow-xl md:rounded-lg
+        transform transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : 'translate-x-[-110%]'}
+      `}>
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b">
+          <h2 className="text-xl font-semibold">Your Cart</h2>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-full"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
-          {items.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">Your cart is empty</p>
-          ) : (
-            <>
-              <div className="max-h-64 overflow-y-auto">
-                {items.map((item) => (
-                  <div key={item.id} className="flex items-center gap-3 py-3 border-b">
-                    {item.image && (
-                      <div className="relative w-14 h-14 flex-shrink-0">
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className="object-cover rounded"
-                        />
-                      </div>
-                    )}
-                    <div className="flex-grow">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-medium text-sm">{item.name}</h3>
-                        <button 
-                          onClick={() => handleRemoveItem(item.id)}
-                          className="text-gray-400 hover:text-red-600 p-1"
-                        >
-                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
-                      <div className="flex justify-between items-center mt-1">
-                        <p className="text-gray-600 text-sm">${item.price.toFixed(2)}</p>
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => handleQuantityChange(item.id, -1)}
-                            className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
-                          >
-                            -
-                          </button>
-                          <span className="text-sm w-4 text-center">{item.quantity}</span>
-                          <button
-                            onClick={() => handleQuantityChange(item.id, 1)}
-                            className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
+        {/* Content */}
+        <div className="overflow-y-auto p-4" style={{ maxHeight: 'calc(80vh - 140px)' }}>
+          {/* Cart Items */}
+          <div className="space-y-4">
+            {items.map((item) => (
+              <div key={item.id} className="flex items-center gap-3 py-3 border-b">
+                {item.image && (
+                  <div className="relative w-14 h-14 flex-shrink-0">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover rounded"
+                    />
+                  </div>
+                )}
+                <div className="flex-grow">
+                  <div className="flex justify-between items-start">
+                    <h3 className="font-medium text-sm">{item.name}</h3>
+                    <button 
+                      onClick={() => handleRemoveItem(item.id)}
+                      className="text-gray-400 hover:text-red-600 p-1"
+                    >
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="flex justify-between items-center mt-1">
+                    <p className="text-gray-600 text-sm">${item.price.toFixed(2)}</p>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleQuantityChange(item.id, -1)}
+                        className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
+                      >
+                        -
+                      </button>
+                      <span className="text-sm w-4 text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => handleQuantityChange(item.id, 1)}
+                        className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-
-              <div className="mt-4 pt-4 border-t">
-                <div className="flex justify-between mb-4">
-                  <span className="font-medium">Total</span>
-                  <span className="font-bold">${calculateTotal().toFixed(2)}</span>
                 </div>
-                <button
-                  onClick={handleCheckout}
-                  className="w-full py-2 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors"
-                >
-                  Go to Checkout
-                </button>
               </div>
-            </>
-          )}
+            ))}
+          </div>
 
           {/* Suggested Items */}
           {suggestedItems.length > 0 && (
@@ -229,7 +225,21 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
             </div>
           )}
         </div>
+
+        {/* Footer */}
+        <div className="border-t bg-white p-4 rounded-b-lg">
+          <div className="flex justify-between mb-4">
+            <span className="font-semibold">Total</span>
+            <span className="font-semibold">${calculateTotal().toFixed(2)}</span>
+          </div>
+          <button 
+            className="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 transition-colors"
+            onClick={handleCheckout}
+          >
+            Go to Checkout
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 } 

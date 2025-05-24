@@ -23,6 +23,17 @@ export async function GET(request: NextRequest) {
   }
 } 
 
+// POST create a new user
+export async function POST(request: NextRequest) {
+  try {
+    const userData = await request.json();
+    const newUser = await userDb.createUser(userData.email, userData.firstName, userData.lastName, userData.image);
+    return NextResponse.json(newUser, { status: 201 });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    return NextResponse.json({ error: 'Failed to create user' }, { status: 500 });
+  }
+}
 
 // PUT update a specific user
 export async function PUT(request: NextRequest) {

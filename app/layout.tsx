@@ -3,6 +3,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
+import { ClientLayout } from './components/ClientLayout';
 
 export const metadata: Metadata = {
   title: "ChicagoGO - Лучший Фастфуд Чикаго",
@@ -32,7 +33,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <ClerkProvider
         appearance={{
-          variables: { colorPrimary: "#DC2626" }, // Red-600 for Chicago theme
+          variables: { colorPrimary: "#DC2626" },
           elements: {
             formButtonPrimary:
               "bg-red-600 border border-red-600 border-solid hover:bg-white hover:text-red-600",
@@ -45,10 +46,10 @@ export default function RootLayout({
           },
         }}
       >
-        <body className="font-sans min-h-screen flex flex-col antialiased">
+        <ClientLayout>
           {children}
           <Toaster position="bottom-center" />
-        </body>
+        </ClientLayout>
       </ClerkProvider>
     </html>
   );

@@ -321,8 +321,6 @@ export default function LocationsPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   );
 }

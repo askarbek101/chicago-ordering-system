@@ -197,7 +197,6 @@ export default function ProfilePage() {
             <div className="text-center">Loading...</div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -385,7 +384,6 @@ export default function ProfilePage() {
           )}
         </div>
       </main>
-      <Footer />
     </>
   );
 } 

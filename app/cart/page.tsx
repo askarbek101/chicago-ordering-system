@@ -108,7 +108,6 @@ export default function CartPage() {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -246,7 +245,6 @@ export default function CartPage() {
           )}
         </div>
       </main>
-      <Footer />
     </>
   );
 }

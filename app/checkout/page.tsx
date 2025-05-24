@@ -351,7 +351,6 @@ export default function CheckoutPage() {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -630,7 +629,6 @@ export default function CheckoutPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

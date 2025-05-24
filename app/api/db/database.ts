@@ -119,10 +119,11 @@ export const categoryDb = {
 // CRUD functions for users
 export const userDb = {
   // Create a new user
-  createUser: async (email: string, firstName: string, lastName: string, image: string, role: string, createdAt: string, updatedAt: string) => {
+  createUser: async (email: string, firstName: string, lastName: string, image: string) => {
+    const now = new Date().toISOString();
     const result = await pool.query(
       'INSERT INTO users (email, first_name, last_name, image, role, phone, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [email, firstName, lastName, image, role, "", createdAt, updatedAt]
+      [email, firstName, lastName, image, "client", "", now, now]
     );
     return result.rows[0];
   },
@@ -228,6 +229,11 @@ export const orderDb = {
     const result = await pool.query('UPDATE orders SET payment_method = $1 WHERE id = $2', [paymentMethod, id]);
     return result.rows[0];
   },  
+  // get all orders
+  getAllOrders: async () => {
+    const result = await pool.query('SELECT * FROM orders ORDER BY created_at DESC');
+    return result.rows;
+  },
 };
 
 
@@ -278,6 +284,11 @@ export const paymentDb = {
   // get all payments by order id
   getAllPaymentsByOrderId: async (orderId: string) => {
     const result = await pool.query('SELECT * FROM payments WHERE order_id = $1', [orderId]);
+    return result.rows;
+  },
+  // get all payments
+  getAllPayments: async () => {
+    const result = await pool.query('SELECT * FROM payments ORDER BY created_at DESC');
     return result.rows;
   },
 };

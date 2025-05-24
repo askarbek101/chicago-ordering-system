@@ -86,8 +86,6 @@ export default async function MenuPage() {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </>
   )
 }
