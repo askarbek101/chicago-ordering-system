@@ -42,13 +42,13 @@ export function MenuContent({ foods, categories }: MenuContentProps) {
   }, []);
 
   const categoryOptions = [
-    { id: "all", name: "All" },
+    { id: "all", name: "Все" },
     ...categories
   ];
 
   const handleQuantityChange = (item: MenuItem, delta: number) => {
     if (!isSignedIn) {
-      toast.error("Please sign in to modify cart");
+      toast.error("Пожалуйста, войдите, чтобы изменить корзину");
       return;
     }
 
@@ -74,11 +74,11 @@ export function MenuContent({ foods, categories }: MenuContentProps) {
       }
       
       if (delta > 0) {
-        toast.success("Updated cart quantity!");
+        toast.success("Обновлены количества в корзине!");
       }
     } catch (error) {
       console.error("Error updating cart:", error);
-      toast.error("Failed to update cart");
+      toast.error("Не удалось обновить корзину");
     } finally {
       setIsAddingToCart(prev => ({ ...prev, [item.id]: false }));
     }
@@ -165,10 +165,10 @@ export function MenuContent({ foods, categories }: MenuContentProps) {
                       {isAddingToCart[item.id] ? (
                         <>
                           <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                          Adding...
+                          Добавляем...
                         </>
                       ) : (
-                        'Add to Cart'
+                        'В Корзину'
                       )}
                     </button>
                   )}
