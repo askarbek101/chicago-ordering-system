@@ -7,9 +7,9 @@ dotenv.config();
 // Create a connection pool using the DATABASE_URL from .env
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl: process.env.NODE_ENV === 'production' 
+    ? { rejectUnauthorized: false }
+    : false
 });
 
 // CRUD functions for food

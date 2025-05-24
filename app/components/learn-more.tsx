@@ -11,14 +11,13 @@ export function LearnMore({ cards }: { cards: Card[] }) {
       <div className="grid grid-cols-4 gap-8 max-w-[75rem] mx-auto w-full pt-16 pb-24">
         <div>
           <span className="text-[0.8125rem]/5 text-[#6C47FF] font-medium">
-            What's next
+            Что дальше
           </span>
           <h2 className="text-xl/[1.625rem] font-semibold text-[#131316] tracking-tight mt-2 mb-3">
-            Learn more from our&nbsp;resources
+            Узнайте больше из наших ресурсов
           </h2>
           <p className="text-[0.8125rem]/5 text-[#5E5F6E]">
-            Prebuilt components to handle essential functionality like user
-            sign-in, sign-up, and account management.
+            Предоставленные компоненты для обработки основных функций, таких как вход, регистрация и управление учетной записью.
           </p>
         </div>
         {cards.map((card) => (

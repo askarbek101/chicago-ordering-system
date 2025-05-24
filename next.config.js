@@ -9,6 +9,10 @@ const nextConfig = {
       },
       // Add other image domains as needed
     ],
+    domains: ['images.immediate.co.uk'],
+  },
+  experimental: {
+    serverActions: true,
   },
 };
 

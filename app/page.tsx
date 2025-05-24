@@ -23,7 +23,7 @@ export default function Home() {
           <div className="absolute inset-0 z-0">
             <Image
               src={heroImage}
-              alt="Chicago-style burger"
+              alt="Чикагский бургер"
               fill
               className="object-cover brightness-50"
               priority
@@ -100,20 +100,20 @@ export default function Home() {
                 <div className="relative h-64">
                   <Image
                     src={menuItem2}
-                    alt="Chicago Dog"
+                    alt="Чикагский Хот-Дог"
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Chicago Dog</h3>
+                  <h3 className="text-xl font-bold mb-2">Чикагский Хот-Дог</h3>
                   <p className="text-gray-600 mb-4">
-                    All-beef hot dog with the works, just how Chicago likes it.
+                    Хот-дог из говядины со всеми добавками, как любят в Чикаго.
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-red-600">$8.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
-                      Add to Cart
+                      В Корзину
                     </button>
                   </div>
                 </div>
@@ -124,20 +124,20 @@ export default function Home() {
                 <div className="relative h-64">
                   <Image
                     src={menuItem3}
-                    alt="Italian Beef Sandwich"
+                    alt="Итальянский Биф-Сэндвич"
                     fill
                     className="object-cover"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2">Italian Beef Sandwich</h3>
+                  <h3 className="text-xl font-bold mb-2">Итальянский Биф-Сэндвич</h3>
                   <p className="text-gray-600 mb-4">
-                    Thinly sliced beef simmered in au jus and served on a French roll.
+                    Тонко нарезанная говядина, приготовленная в соусе и подающаяся на французском хлебе.
                   </p>
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold text-red-600">$10.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
-                      Add to Cart
+                      В Корзину
                     </button>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function Home() {
                 href="/menu" 
                 className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 transition-colors inline-block"
               >
-                View Full Menu
+                Посмотреть Полное Меню
               </Link>
             </div>
           </div>

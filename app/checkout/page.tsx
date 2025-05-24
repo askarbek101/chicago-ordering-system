@@ -327,12 +327,12 @@ export default function CheckoutPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-4">Order Confirmed!</h1>
+              <h1 className="text-3xl font-bold text-gray-800 mb-4">Заказ Подтвержден!</h1>
               <p className="text-gray-600 mb-6">
-                Thank you for your order. Your order number is <span className="font-bold">{orderId}</span>.
+                Спасибо за ваш заказ. Ваш номер заказа <span className="font-bold">{orderId}</span>.
               </p>
               <p className="text-gray-600 mb-8">
-                We've sent a confirmation email to your inbox with all the details.
+                Мы отправили подтверждение на ваш электронный ящик с всеми деталями.
               </p>
               <div className="flex justify-center gap-4">
                 <Link 

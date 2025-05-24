@@ -15,9 +15,14 @@ function formatPrice(price: string | number): string {
 export const dynamic = 'force-dynamic';
 
 async function getMenuData() {
-  const categories = await categoryDb.getAllCategories();
-  const foods = await foodDb.getAllFood();
-  return { categories, foods };
+  try {
+    const categories = await categoryDb.getAllCategories();
+    const foods = await foodDb.getAllFood();
+    return { categories, foods };
+  } catch (error) {
+    console.error('Error fetching menu data:', error);
+    return { categories: [], foods: [] };
+  }
 }
 
 export default async function MenuPage() {
