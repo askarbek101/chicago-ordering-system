@@ -205,6 +205,9 @@ export default function AdminPage() {
         <div className="text-center">
           <h1 className="text-4xl font-bold text-red-600 mb-4">Доступ запрещен</h1>
           <p className="text-gray-600">У вас нет прав для доступа к этой странице.</p>
+          <a href="/" className="text-red-600 hover:text-red-700 mt-4 inline-block">
+            Вернуться на главную ChicagoGO
+          </a>
         </div>
       </div>
     );
@@ -213,7 +216,12 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">Панель администратора</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold">Панель администратора</h1>
+          <a href="/" className="text-red-600 hover:text-red-700">
+            Вернуться на главную ChicagoGO
+          </a>
+        </div>
         
         {/* Navigation Tabs */}
         <div className="flex space-x-4 mb-8">
