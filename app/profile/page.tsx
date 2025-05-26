@@ -227,7 +227,7 @@ export default function ProfilePage() {
             {isEditing ? (
               <div className="space-y-4">
                 <div>
-                  <label className="block text-gray-700 mb-2">First Name</label>
+                  <label className="block text-gray-700 mb-2">Имя</label>
                   <input
                     type="text"
                     value={userProfile.firstName}
@@ -238,7 +238,7 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-gray-700 mb-2">Фамилия</label>
                   <input
                     type="text"
                     value={userProfile.lastName}
@@ -249,7 +249,7 @@ export default function ProfilePage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700 mb-2">Phone</label>
+                  <label className="block text-gray-700 mb-2">Телефон</label>
                   <input
                     type="tel"
                     value={userProfile.phone}
@@ -263,22 +263,22 @@ export default function ProfilePage() {
                   onClick={handleUpdateProfile}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                 >
-                  Save Changes
+                  Сохранить изменения
                 </button>
               </div>
             ) : (
               <div className="space-y-2">
                 <p>
-                  <span className="font-semibold">Name:</span>{" "}
+                  <span className="font-semibold">Имя:</span>{" "}
                   {userProfile.firstName} {userProfile.lastName}
                 </p>
                 <p>
-                  <span className="font-semibold">Email:</span>{" "}
+                  <span className="font-semibold">Эл. почта:</span>{" "}
                   {user?.primaryEmailAddress?.emailAddress}
                 </p>
                 <p>
-                  <span className="font-semibold">Phone:</span>{" "}
-                  {userProfile.phone || "Not provided"}
+                  <span className="font-semibold">Телефон:</span>{" "}
+                  {userProfile.phone || "Не указан"}
                 </p>
               </div>
             )}
@@ -286,7 +286,7 @@ export default function ProfilePage() {
 
           {/* Addresses Section */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-bold mb-6">Delivery Addresses</h2>
+            <h2 className="text-2xl font-bold mb-6">Адреса доставки</h2>
             <div className="space-y-4">
               {addresses.map((address) => (
                 <div
@@ -298,7 +298,7 @@ export default function ProfilePage() {
                     onClick={() => handleDeleteAddress(address.id)}
                     className="text-red-600 hover:text-red-700"
                   >
-                    Delete
+                    Удалить
                   </button>
                 </div>
               ))}
@@ -307,14 +307,14 @@ export default function ProfilePage() {
                   type="text"
                   value={newAddress}
                   onChange={(e) => setNewAddress(e.target.value)}
-                  placeholder="Add new address"
+                  placeholder="Добавить новый адрес"
                   className="flex-1 px-3 py-2 border rounded-md"
                 />
                 <button
                   onClick={handleAddAddress}
                   className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
                 >
-                  Add
+                  Добавить
                 </button>
               </div>
             </div>
@@ -322,7 +322,7 @@ export default function ProfilePage() {
 
           {/* Orders Section */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-bold mb-6">Order History</h2>
+            <h2 className="text-2xl font-bold mb-6">История заказов</h2>
             <div className="space-y-4">
               {orders.map((order) => (
                 <div
@@ -331,7 +331,7 @@ export default function ProfilePage() {
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="font-semibold">Order #{order.id}</p>
+                      <p className="font-semibold">Заказ #{order.id}</p>
                       <p className="text-sm text-gray-600">
                         {new Date(order.created_at).toLocaleDateString()}
                       </p>
@@ -341,7 +341,7 @@ export default function ProfilePage() {
                         ${Number(order.total_price).toFixed(2)}
                       </p>
                       <p className="text-sm text-gray-600">
-                        Status: {order.status}
+                        Статус: {order.status}
                       </p>
                     </div>
                   </div>
@@ -353,7 +353,7 @@ export default function ProfilePage() {
           {/* Active Cart Section */}
           {activeCart.length > 0 && (
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold mb-6">Active Cart</h2>
+              <h2 className="text-2xl font-bold mb-6">Текущая корзина</h2>
               <div className="space-y-4">
                 {activeCart.map((item) => (
                   <div
@@ -363,7 +363,7 @@ export default function ProfilePage() {
                     <div>
                       <p className="font-semibold">{item.food.name}</p>
                       <p className="text-sm text-gray-600">
-                        Quantity: {item.quantity}
+                        Количество: {item.quantity}
                       </p>
                     </div>
                     <p className="font-bold text-red-600">
@@ -376,7 +376,7 @@ export default function ProfilePage() {
                     onClick={() => router.push("/cart")}
                     className="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700"
                   >
-                    View Cart
+                    Перейти в корзину
                   </button>
                 </div>
               </div>

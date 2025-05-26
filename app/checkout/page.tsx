@@ -385,22 +385,22 @@ export default function CheckoutPage() {
                       <p className="font-medium text-gray-800">{item.name}</p>
                       <p className="text-gray-500 text-sm">Quantity: {item.quantity}</p>
                     </div>
-                    <p className="font-medium text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-medium text-gray-800">₸{(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
                 
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <div className="flex justify-between text-gray-600 mb-2">
                     <span>Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>₸{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-gray-600 mb-4">
                     <span>Delivery Fee</span>
-                    <span>$3.99</span>
+                    <span>₸3.99</span>
                   </div>
                   <div className="flex justify-between text-lg font-bold text-gray-800">
                     <span>Total</span>
-                    <span>${(totalPrice + 3.99).toFixed(2)}</span>
+                    <span>₸{(totalPrice + 3.99).toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -621,7 +621,7 @@ export default function CheckoutPage() {
                       Processing...
                     </span>
                   ) : (
-                    `Pay $${(totalPrice + 3.99).toFixed(2)}`
+                    `Pay ₸${(totalPrice + 3.99).toFixed(2)}`
                   )}
                 </button>
               </div>

@@ -130,7 +130,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
       `}>
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-xl font-semibold">Your Cart</h2>
+          <h2 className="text-xl font-semibold">Ваша корзина</h2>
           <button 
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full"
@@ -170,7 +170,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                     </button>
                   </div>
                   <div className="flex justify-between items-center mt-1">
-                    <p className="text-gray-600 text-sm">${item.price.toFixed(2)}</p>
+                    <p className="text-gray-600 text-sm">₸{item.price.toFixed(2)}</p>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleQuantityChange(item.id, -1)}
@@ -195,7 +195,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           {/* Suggested Items */}
           {suggestedItems.length > 0 && (
             <div className="mt-6 pt-6 border-t">
-              <h3 className="font-medium text-sm mb-3">You Might Also Like</h3>
+              <h3 className="font-medium text-sm mb-3">Вы можете также заказать</h3>
               <div className="space-y-3">
                 {suggestedItems.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
@@ -211,13 +211,13 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                     )}
                     <div className="flex-grow">
                       <h4 className="text-sm font-medium">{item.name}</h4>
-                      <p className="text-sm text-gray-600">${item.price.toFixed(2)}</p>
+                      <p className="text-sm text-gray-600">₸{item.price.toFixed(2)}</p>
                     </div>
                     <button
                       onClick={() => handleAddSuggested(item)}
                       className="px-3 py-1 text-sm text-red-600 border border-red-600 rounded-full hover:bg-red-50"
                     >
-                      Add
+                      Добавить
                     </button>
                   </div>
                 ))}
@@ -229,14 +229,14 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         {/* Footer */}
         <div className="border-t bg-white p-4 rounded-b-lg">
           <div className="flex justify-between mb-4">
-            <span className="font-semibold">Total</span>
-            <span className="font-semibold">${calculateTotal().toFixed(2)}</span>
+            <span className="font-semibold">Итог</span>
+            <span className="font-semibold">₸{calculateTotal().toFixed(2)}</span>
           </div>
           <button 
             className="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 transition-colors"
             onClick={handleCheckout}
           >
-            Go to Checkout
+            Оформить заказ
           </button>
         </div>
       </div>
