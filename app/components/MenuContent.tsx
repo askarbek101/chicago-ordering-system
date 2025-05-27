@@ -135,7 +135,7 @@ export function MenuContent({ foods, categories }: MenuContentProps) {
               <p className="text-gray-600 mb-4">{item.description}</p>
               <div className="flex justify-between items-center">
                 <span className="text-xl font-bold text-red-600">
-                  ${formatPrice(item.price)}
+                  ₸{formatPrice(item.price)}
                 </span>
                 <div className="flex items-center gap-2">
                   {cartItems[item.id] ? (

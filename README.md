@@ -1,83 +1,100 @@
-<p align="center">
-  <a href="https://go.clerk.com/e3UDpP4" target="_blank" rel="noopener noreferrer">
-   <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./public/light-logo.png">
-      <img src="./public/dark-logo.png" height="64">
-    </picture>
-  </a>
-  <br />
-</p>
-<div align="center">
-  <h1>
-    Next.js Clerk auth starter template
-  </h1>
-  <a href="https://www.npmjs.com/package/@clerk/clerk-js">
-    <img alt="" src="https://img.shields.io/npm/dm/@clerk/clerk-js" />
-  </a>
-  <a href="https://discord.com/invite/b5rXHjAg7A">
-    <img alt="Discord" src="https://img.shields.io/discord/856971667393609759?color=7389D8&label&logo=discord&logoColor=ffffff" />
-  </a>
-  <a href="https://twitter.com/clerkdev">
-    <img alt="Twitter" src="https://img.shields.io/twitter/url.svg?label=%40clerkdev&style=social&url=https%3A%2F%2Ftwitter.com%2Fclerkdev" />
-  </a>
-  <br />
-  <br />
-  <img alt="Clerk Hero Image" src="public/og.png">
-</div>
+# ChicagoGO - Система управления рестораном быстрого питания
 
-## Introduction
+## О проекте
 
-Clerk is a developer-first authentication and user management solution. It provides pre-built React components and hooks for sign-in, sign-up, user profile, and organization management. Clerk is designed to be easy to use and customize, and can be dropped into any React or Next.js application.
+ChicagoGO - это веб-приложение для сети ресторанов быстрого питания, специализирующейся на чикагской кухне. Проект представляет собой полноценную систему для заказа еды онлайн с функционалом для клиентов и администраторов.
 
-This template allows you to get started with Clerk and Next.js (App Router) in a matter of minutes, and demonstrates features of Clerk such as:
+## Технологический стек
 
-- Fully functional auth flow with sign-in, sign-up, and a protected page
-- Customized Clerk components with Tailwind CSS
-- Hooks for accessing user data and authentication state
-- Organizations for multi-tenant applications
+### Frontend:
+- **Next.js 14** - React фреймворк для создания веб-приложений
+- **TypeScript** - типизированный JavaScript  
+- **Tailwind CSS** - утилитарный CSS фреймворк
+- **React Hooks** - для управления состоянием компонентов
+- **Next.js App Router** - для маршрутизации
 
-## Demo
+### Аутентификация:
+- **Clerk** - сервис для управления аутентификацией и пользователями
 
-A hosted demo of this example is available at https://clerk-nextjs-app-router.vercel.app/
+### Дополнительные библиотеки:
+- **react-hot-toast** - для уведомлений
+- **next/image** - для оптимизации изображений
 
-## Deploy
+## Основные функции
 
-Easily deploy the template to Vercel with the button below. You will need to set the required environment variables in the Vercel dashboard.
+### Для клиентов:
+1. Просмотр меню и категорий блюд
+2. Регистрация и авторизация  
+3. Управление корзиной
+4. Оформление заказов
+5. История заказов
+6. Управление профилем
+7. Сохранение адресов доставки
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fclerk%2Fnextjs-auth-starter-template&env=CLERK_SECRET_KEY,NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY&envDescription=Your%20Clerk%20application%20keys%2C%20accessible%20from%20dashboard.clerk.com.&envLink=https%3A%2F%2Fgithub.com%2Fclerk%2Fnextjs-auth-starter-template%3Ftab%3Dreadme-ov-file%23running-the-template&demo-url=https%3A%2F%2Fnextjs-auth-starter-template-kit.vercel.app%2F)
+### Для администраторов:
+1. Управление меню и категориями
+2. Управление пользователями
+3. Просмотр и обработка заказов
+4. Аналитика продаж
+5. Управление локациями
 
-## Running the template
+## Структура проекта
 
-```bash
-git clone https://github.com/clerk/clerk-nextjs-demo-app-router
-```
+app/
+├── components/ # Переиспользуемые компоненты
+├── admin/ # Административная панель
+├── about/ # Страница "О нас"
+├── menu/ # Страница меню
+├── profile/ # Личный кабинет
+├── checkout/ # Оформление заказа
+├── locations/ # Страница локаций
+└── images/ # Изображения
 
-To run the example locally, you need to:
+## Установка и запуск
 
-1. Sign up for a Clerk account at [https://clerk.com](https://go.clerk.com/31bREJU).
-2. Go to the [Clerk dashboard](https://go.clerk.com/4I5LXFj) and create an application.
-3. Set the required Clerk environment variables as shown in [the example `env` file](./.env.example).
-4. Go to "Organization Settings" in your sidebar and enable Organizations
-5. `npm install` the required dependencies.
-6. `npm run dev` to launch the development server.
+1. Клонируйте репозиторий:
+bash
+git clone https://github.com/your-username/chicagogo.git
+cd chicagogo
 
-## Learn more
+2. Установите зависимости:
 
-To learn more about Clerk and Next.js, check out the following resources:
+bash
+npm install
+или
+yarn install
 
-- [Quickstart: Get started with Next.js and Clerk](https://go.clerk.com/vgWhQ7B)
-- [Clerk Documentation](https://go.clerk.com/aNiTioa)
-- [Next.js Documentation](https://nextjs.org/docs)
 
-## Found an issue or have feedback?
+3. Настройте переменные окружения:
+Создайте файл `.env.local` и добавьте:
 
-If you have found an issue with this repo or have feedback, please join our Discord and create a new thread inside of our [support](https://clerk.com/discord) channel.
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=ваш_ключ
+CLERK_SECRET_KEY=ваш_секретный_ключ
+DATABASE_URL=ваш_URL_базы_данных
 
-If it's a quick fix, such as a misspelled word or a broken link, feel free to skip creating a thread.
-Go ahead and create a [pull request](https://github.com/clerk/clerk-nextjs-demo-app-router/pulls) with the solution. :rocket:
+4. Запустите проект:
 
-## Connect with us
+bash
+npm run dev
+или
+yarn dev
 
-You can discuss ideas, ask questions, and meet others from the community in our [Discord](https://clerk.com/discord).
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-If you prefer, you can also find support through our [Twitter](https://twitter.com/ClerkDev), or you can [email](mailto:support@clerk.dev) us!
+## Развертывание
+
+Проект можно развернуть на любой платформе, поддерживающей Node.js. Рекомендуется использовать:
+
+- [Vercel](https://vercel.com)
+
+## Вклад в проект
+
+Мы приветствуем вклад в развитие проекта! Пожалуйста, ознакомьтесь с нашим руководством по внесению изменений перед созданием pull request.
+
+## Лицензия
+
+Этот проект распространяется под лицензией MIT. Подробности в файле [LICENSE](LICENSE).
+
+## Контакты
+
+Если у вас есть вопросы или предложения, пожалуйста, создайте issue или свяжитесь с нами по электронной почте.
