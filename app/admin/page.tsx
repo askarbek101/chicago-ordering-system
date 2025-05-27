@@ -368,7 +368,7 @@ function FoodSection({ foods, categories, onUpdate }: { foods: Food[], categorie
             <h3 className="text-xl font-semibold mb-2">{food.name}</h3>
             <p className="text-gray-600 mb-2">{food.description}</p>
             <p className="text-red-600 font-bold mb-4">
-              ₽{formatPrice(food.price)}
+              ₸{formatPrice(food.price)}
             </p>
             <div className="flex space-x-2">
               <button 

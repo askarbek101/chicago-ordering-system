@@ -87,7 +87,7 @@ export default function Home() {
                     Наш фирменный бургер, вдохновленный знаменитой пиццей Дип Диш из Чикаго.
                   </p>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold text-red-600">$12.99</span>
+                    <span className="text-xl font-bold text-red-600">₸12.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
                       В Корзину
                     </button>
@@ -111,7 +111,7 @@ export default function Home() {
                     Хот-дог из говядины со всеми добавками, как любят в Чикаго.
                   </p>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold text-red-600">$8.99</span>
+                    <span className="text-xl font-bold text-red-600">₸8.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
                       В Корзину
                     </button>
@@ -135,7 +135,7 @@ export default function Home() {
                     Тонко нарезанная говядина, приготовленная в соусе и подающаяся на французском хлебе.
                   </p>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold text-red-600">$10.99</span>
+                    <span className="text-xl font-bold text-red-600">₸10.99</span>
                     <button className="px-4 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors">
                       В Корзину
                     </button>
