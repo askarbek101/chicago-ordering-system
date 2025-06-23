@@ -65,7 +65,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2">
             <Image 
               src={logo} 
-              alt="ChicagoGO Logo" 
+              alt="ChicagoGO Логотип" 
               width={50} 
               height={50} 
               className="rounded-full"

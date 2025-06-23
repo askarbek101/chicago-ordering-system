@@ -203,80 +203,87 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-red-600 mb-4">Доступ запрещен</h1>
-          <p className="text-gray-600">У вас нет прав для доступа к этой странице.</p>
-          <a href="/" className="text-red-600 hover:text-red-700 mt-4 inline-block">
-            Вернуться на главную ChicagoGO
-          </a>
+          <h1 className="text-2xl font-bold mb-4">Доступ запрещен</h1>
+          <p className="text-gray-600">У вас нет прав администратора для доступа к этой странице.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Панель администратора</h1>
-          <a href="/" className="text-red-600 hover:text-red-700">
-            Вернуться на главную ChicagoGO
-          </a>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow">
+        <div className="container mx-auto px-4 py-6">
+          <h1 className="text-3xl font-bold">Панель администратора</h1>
         </div>
-        
-        {/* Navigation Tabs */}
-        <div className="flex space-x-4 mb-8">
-          {[
-            ['food', 'Меню'],
-            ['categories', 'Категории'],
-            ['users', 'Пользователи'],
-            ['orders', 'Заказы'],
-            ['payments', 'Платежи']
-          ].map(([tab, label]) => (
+      </header>
+
+      {/* Navigation Tabs */}
+      <div className="bg-white border-b">
+        <div className="container mx-auto px-4">
+          <nav className="flex space-x-4">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab as any)}
-              className={`px-4 py-2 rounded-lg ${
-                activeTab === tab 
-                  ? 'bg-red-600 text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              onClick={() => setActiveTab('food')}
+              className={`py-4 px-6 focus:outline-none ${
+                activeTab === 'food'
+                  ? 'border-b-2 border-red-600 text-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
               }`}
             >
-              {label}
+              Меню
             </button>
-          ))}
+            <button
+              onClick={() => setActiveTab('categories')}
+              className={`py-4 px-6 focus:outline-none ${
+                activeTab === 'categories'
+                  ? 'border-b-2 border-red-600 text-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Категории
+            </button>
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`py-4 px-6 focus:outline-none ${
+                activeTab === 'users'
+                  ? 'border-b-2 border-red-600 text-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Пользователи
+            </button>
+            <button
+              onClick={() => setActiveTab('orders')}
+              className={`py-4 px-6 focus:outline-none ${
+                activeTab === 'orders'
+                  ? 'border-b-2 border-red-600 text-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Заказы
+            </button>
+            <button
+              onClick={() => setActiveTab('payments')}
+              className={`py-4 px-6 focus:outline-none ${
+                activeTab === 'payments'
+                  ? 'border-b-2 border-red-600 text-red-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Платежи
+            </button>
+          </nav>
         </div>
+      </div>
 
-        {/* Content Sections */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          {activeTab === 'food' && (
-            <FoodSection 
-              foods={foods} 
-              categories={categories}
-              onUpdate={fetchAllData}
-            />
-          )}
-          {activeTab === 'categories' && (
-            <CategoriesSection 
-              categories={categories}
-              onUpdate={fetchAllData}
-            />
-          )}
-          {activeTab === 'users' && (
-            <UsersSection 
-              users={users}
-              onUpdate={fetchAllData}
-            />
-          )}
-          {activeTab === 'orders' && (
-            <OrdersSection 
-              orders={orders}
-              onUpdate={fetchAllData}
-            />
-          )}
-          {activeTab === 'payments' && (
-            <PaymentsSection payments={payments} />
-          )}
-        </div>
+      {/* Content */}
+      <div className="container mx-auto px-4 py-8">
+        {activeTab === 'food' && <FoodSection foods={foods} categories={categories} onUpdate={fetchAllData} />}
+        {activeTab === 'categories' && <CategoriesSection categories={categories} onUpdate={fetchAllData} />}
+        {activeTab === 'users' && <UsersSection users={users} onUpdate={fetchAllData} />}
+        {activeTab === 'orders' && <OrdersSection orders={orders} onUpdate={fetchAllData} />}
+        {activeTab === 'payments' && <PaymentsSection payments={payments} />}
       </div>
     </div>
   );
@@ -344,162 +351,151 @@ function FoodSection({ foods, categories, onUpdate }: { foods: Food[], categorie
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Меню</h2>
-        <button 
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" 
+        <h2 className="text-2xl font-bold">Управление меню</h2>
+        <button
           onClick={() => handleOpenModal()}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
         >
-          Добавить
+          Добавить блюдо
         </button>
       </div>
-      
-      {/* Food Items Grid */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {foods.map((food) => (
-          <div key={food.id} className="border rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <Image
-              src={food.image || '/placeholder-food.jpg'}
-              alt={food.name}
-              width={200}
-              height={200}
-              className="w-full h-48 object-cover rounded-lg mb-4"
-              onError={() => setImagePreviewError(true)}
-            />
-            <h3 className="text-xl font-semibold mb-2">{food.name}</h3>
-            <p className="text-gray-600 mb-2">{food.description}</p>
-            <p className="text-red-600 font-bold mb-4">
-              ₸{formatPrice(food.price)}
-            </p>
-            <div className="flex space-x-2">
-              <button 
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-                onClick={() => handleOpenModal(food)}
-              >
-                Изменить
-              </button>
-              <button 
-                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                onClick={async () => {
-                  if (window.confirm('Вы уверены, что хотите удалить это блюдо?')) {
-                    await adminService.deleteFood(food.id);
-                    onUpdate();
-                    toast.success('Блюдо удалено');
-                  }
-                }}
-              >
-                Удалить
-              </button>
+          <div key={food.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="relative h-48">
+              <Image
+                src={food.image}
+                alt={food.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="text-lg font-semibold mb-2">{food.name}</h3>
+              <p className="text-gray-600 text-sm mb-2">{food.description}</p>
+              <div className="flex justify-between items-center">
+                <span className="font-bold">₸{food.price.toFixed(2)}</span>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => handleOpenModal(food)}
+                    className="p-2 text-blue-600 hover:bg-blue-50 rounded"
+                  >
+                    Изменить
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (window.confirm('Вы уверены, что хотите удалить это блюдо?')) {
+                        try {
+                          await adminService.deleteFood(food.id);
+                          toast.success('Блюдо успешно удалено');
+                          onUpdate();
+                        } catch (error) {
+                          console.error('Error deleting food:', error);
+                          toast.error('Ошибка при удалении блюда');
+                        }
+                      }
+                    }}
+                    className="p-2 text-red-600 hover:bg-red-50 rounded"
+                  >
+                    Удалить
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Updated Modal with Image Preview */}
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full">
-            <h3 className="text-2xl font-bold mb-4">
-              {isEditing ? 'Редактировать блюдо' : 'Добавить новое блюдо'}
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-bold mb-4">
+              {modalData.id ? 'Изменить блюдо' : 'Добавить новое блюдо'}
             </h3>
-            
-            {/* Image Preview */}
-            <div className="mb-4">
-              <div className="w-full h-48 rounded-lg overflow-hidden bg-gray-100 mb-2">
-                {modalData.image ? (
-                  <Image
-                    src={imagePreviewError ? '/placeholder-food.jpg' : modalData.image}
-                    alt="Предпросмотр"
-                    width={400}
-                    height={300}
-                    className="w-full h-full object-cover"
-                    onError={() => setImagePreviewError(true)}
-                    priority={true}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400">
-                    Нет изображения
-                  </div>
-                )}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Название
+                </label>
+                <input
+                  type="text"
+                  value={modalData.name}
+                  onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  required
+                />
               </div>
-            </div>
-
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Название</label>
-                  <input
-                    type="text"
-                    value={modalData.name}
-                    onChange={(e) => setModalData({...modalData, name: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Описание</label>
-                  <textarea
-                    value={modalData.description}
-                    onChange={(e) => setModalData({...modalData, description: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    rows={3}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Цена</label>
-                  <input
-                    type="number"
-                    value={modalData.price}
-                    onChange={(e) => setModalData({...modalData, price: Math.max(0, parseFloat(e.target.value) || 0)})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    required
-                    min="0"
-                    step="0.01"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">URL изображения</label>
-                  <input
-                    type="text"
-                    value={modalData.image}
-                    onChange={(e) => {
-                      setImagePreviewError(false);
-                      setModalData({...modalData, image: e.target.value});
-                    }}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Категория</label>
-                  <select
-                    value={modalData.categoryId}
-                    onChange={(e) => setModalData({...modalData, categoryId: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    required
-                  >
-                    <option value="">Выберите категорию</option>
-                    {categories.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Описание
+                </label>
+                <textarea
+                  value={modalData.description}
+                  onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  rows={3}
+                  required
+                />
               </div>
-              <div className="mt-6 flex justify-end space-x-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Цена
+                </label>
+                <input
+                  type="number"
+                  value={modalData.price}
+                  onChange={(e) => setModalData({ ...modalData, price: parseFloat(e.target.value) })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  step="0.01"
+                  min="0"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  URL изображения
+                </label>
+                <input
+                  type="text"
+                  value={modalData.image}
+                  onChange={(e) => setModalData({ ...modalData, image: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Категория
+                </label>
+                <select
+                  value={modalData.categoryId}
+                  onChange={(e) => setModalData({ ...modalData, categoryId: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  required
+                >
+                  <option value="">Выберите категорию</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex justify-end gap-4 mt-6">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
                 >
                   Отмена
                 </button>
                 <button
                   type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
-                  {isEditing ? 'Сохранить' : 'Добавить'}
+                  {modalData.id ? 'Сохранить' : 'Добавить'}
                 </button>
               </div>
             </form>
@@ -552,37 +548,41 @@ function CategoriesSection({ categories, onUpdate }: { categories: Category[], o
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Категории</h2>
-        <button 
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+        <h2 className="text-2xl font-bold">Управление категориями</h2>
+        <button
           onClick={() => handleOpenModal()}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
         >
-          Добавить
+          Добавить категорию
         </button>
       </div>
 
-      {/* Categories Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((category) => (
-          <div key={category.id} className="border rounded-lg p-4 hover:shadow-lg transition-shadow">
-            <h3 className="text-xl font-semibold mb-2">{category.name}</h3>
-            <p className="text-gray-600 mb-4">{category.description}</p>
-            <div className="flex space-x-2">
-              <button 
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+          <div key={category.id} className="bg-white rounded-lg shadow-md p-4">
+            <h3 className="text-lg font-semibold mb-2">{category.name}</h3>
+            <p className="text-gray-600 text-sm mb-4">{category.description}</p>
+            <div className="flex justify-end gap-2">
+              <button
                 onClick={() => handleOpenModal(category)}
+                className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded"
               >
                 Изменить
               </button>
-              <button 
-                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              <button
                 onClick={async () => {
                   if (window.confirm('Вы уверены, что хотите удалить эту категорию?')) {
-                    await adminService.deleteCategory(category.id);
-                    onUpdate();
-                    toast.success('Категория удалена');
+                    try {
+                      await adminService.deleteCategory(category.id);
+                      toast.success('Категория успешно удалена');
+                      onUpdate();
+                    } catch (error) {
+                      console.error('Error deleting category:', error);
+                      toast.error('Ошибка при удалении категории');
+                    }
                   }
                 }}
+                className="px-3 py-1 text-red-600 hover:bg-red-50 rounded"
               >
                 Удалить
               </button>
@@ -591,49 +591,51 @@ function CategoriesSection({ categories, onUpdate }: { categories: Category[], o
         ))}
       </div>
 
-      {/* Category Modal */}
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full">
-            <h3 className="text-2xl font-bold mb-4">
-              {isEditing ? 'Редактировать категорию' : 'Добавить новую категорию'}
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-bold mb-4">
+              {modalData.id ? 'Изменить категорию' : 'Добавить новую категорию'}
             </h3>
-            <form onSubmit={handleSubmit}>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Название</label>
-                  <input
-                    type="text"
-                    value={modalData.name}
-                    onChange={(e) => setModalData({...modalData, name: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Описание</label>
-                  <textarea
-                    value={modalData.description}
-                    onChange={(e) => setModalData({...modalData, description: e.target.value})}
-                    className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
-                    rows={3}
-                    required
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Название
+                </label>
+                <input
+                  type="text"
+                  value={modalData.name}
+                  onChange={(e) => setModalData({ ...modalData, name: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  required
+                />
               </div>
-              <div className="mt-6 flex justify-end space-x-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Описание
+                </label>
+                <textarea
+                  value={modalData.description}
+                  onChange={(e) => setModalData({ ...modalData, description: e.target.value })}
+                  className="w-full border rounded-lg px-3 py-2"
+                  rows={3}
+                  required
+                />
+              </div>
+              <div className="flex justify-end gap-4 mt-6">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300"
+                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
                 >
                   Отмена
                 </button>
                 <button
                   type="submit"
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                 >
-                  {isEditing ? 'Сохранить' : 'Добавить'}
+                  {modalData.id ? 'Сохранить' : 'Добавить'}
                 </button>
               </div>
             </form>
@@ -648,39 +650,87 @@ function CategoriesSection({ categories, onUpdate }: { categories: Category[], o
 function UsersSection({ users, onUpdate }: { users: User[], onUpdate: () => Promise<void> }) {
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Пользователи</h2>
+      <h2 className="text-2xl font-bold mb-6">Управление пользователями</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full">
+        <table className="min-w-full bg-white">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-6 py-3 text-left">Имя</th>
-              <th className="px-6 py-3 text-left">Почта</th>
-              <th className="px-6 py-3 text-left">Роль</th>
-              <th className="px-6 py-3 text-left">Телефон</th>
-              <th className="px-6 py-3 text-left">Действия</th>
+            <tr className="bg-gray-50">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Пользователь
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Email
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Телефон
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Роль
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Действия
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {users.map((user) => (
-              <tr key={user.id} className="border-b">
-                <td className="px-6 py-4">{`${user.first_name} ${user.last_name}`}</td>
-                <td className="px-6 py-4">{user.email}</td>
-                <td className="px-6 py-4">{user.role === 'admin' ? 'Администратор' : 'Клиент'}</td>
-                <td className="px-6 py-4">{user.phone}</td>
-                <td className="px-6 py-4">
-                  <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                    Изменить
+              <tr key={user.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0 h-10 w-10 relative">
+                      <Image
+                        src={user.image || '/default-avatar.png'}
+                        alt={`${user.first_name} ${user.last_name}`}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    </div>
+                    <div className="ml-4">
+                      <div className="text-sm font-medium text-gray-900">
+                        {user.first_name} {user.last_name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {user.email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {user.phone}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    user.role === 'admin' 
+                      ? 'bg-red-100 text-red-800' 
+                      : 'bg-green-100 text-green-800'
+                  }`}>
+                    {user.role === 'admin' ? 'Администратор' : 'Клиент'}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <button
+                    onClick={async () => {
+                      const newRole = user.role === 'admin' ? 'client' : 'admin';
+                      if (window.confirm(`Изменить роль пользователя на ${newRole === 'admin' ? 'Администратор' : 'Клиент'}?`)) {
+                        try {
+                          await adminService.updateUserRole(user.id, newRole);
+                          toast.success('Роль пользователя успешно обновлена');
+                          onUpdate();
+                        } catch (error) {
+                          console.error('Error updating user role:', error);
+                          toast.error('Ошибка при обновлении роли пользователя');
+                        }
+                      }
+                    }}
+                    className="text-blue-600 hover:text-blue-900"
+                  >
+                    Изменить роль
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="mt-4">
-        <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" onClick={onUpdate}>
-          Обновить
-        </button>
       </div>
     </div>
   );
@@ -688,66 +738,123 @@ function UsersSection({ users, onUpdate }: { users: User[], onUpdate: () => Prom
 
 // Component for Orders section
 function OrdersSection({ orders, onUpdate }: { orders: Order[], onUpdate: () => Promise<void> }) {
-  const formatPrice = (price: number | string | null | undefined): string => {
-    if (price === null || price === undefined) return '0.00';
-    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
-    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
-  };
-
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'completed': return 'Выполнен';
-      case 'pending': return 'В обработке';
-      case 'cancelled': return 'Отменен';
-      default: return status;
+      case 'pending':
+        return 'В обработке';
+      case 'confirmed':
+        return 'Подтвержден';
+      case 'preparing':
+        return 'Готовится';
+      case 'ready':
+        return 'Готов';
+      case 'delivering':
+        return 'Доставляется';
+      case 'delivered':
+        return 'Доставлен';
+      case 'cancelled':
+        return 'Отменен';
+      default:
+        return status;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'confirmed':
+        return 'bg-blue-100 text-blue-800';
+      case 'preparing':
+        return 'bg-purple-100 text-purple-800';
+      case 'ready':
+        return 'bg-green-100 text-green-800';
+      case 'delivering':
+        return 'bg-indigo-100 text-indigo-800';
+      case 'delivered':
+        return 'bg-gray-100 text-gray-800';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Заказы</h2>
+      <h2 className="text-2xl font-bold mb-6">Управление заказами</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full">
+        <table className="min-w-full bg-white">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-6 py-3 text-left">ID Заказа</th>
-              <th className="px-6 py-3 text-left">Пользователь</th>
-              <th className="px-6 py-3 text-left">Статус</th>
-              <th className="px-6 py-3 text-left">Сумма</th>
-              <th className="px-6 py-3 text-left">Дата</th>
-              <th className="px-6 py-3 text-left">Действия</th>
+            <tr className="bg-gray-50">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID заказа
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Клиент
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Адрес доставки
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Сумма
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Статус
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Действия
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {orders.map((order) => (
-              <tr key={order.id} className="border-b">
-                <td className="px-6 py-4">{order.id}</td>
-                <td className="px-6 py-4">{order.user_email}</td>
-                <td className="px-6 py-4">
-                  <span className={`px-2 py-1 rounded-full text-sm ${
-                    order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                    order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-red-100 text-red-800'
-                  }`}>
+              <tr key={order.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  #{order.id}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {order.user_email}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {order.delivery_address}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ₸{order.total_price.toFixed(2)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}>
                     {getStatusText(order.status)}
                   </span>
                 </td>
-                <td className="px-6 py-4">${formatPrice(order.total_price)}</td>
-                <td className="px-6 py-4">{new Date(order.created_at).toLocaleDateString('ru-RU')}</td>
-                <td className="px-6 py-4">
-                  <button className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                    Изменить
-                  </button>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <select
+                    value={order.status}
+                    onChange={async (e) => {
+                      try {
+                        await adminService.updateOrderStatus(order.id, e.target.value);
+                        toast.success('Статус заказа успешно обновлен');
+                        onUpdate();
+                      } catch (error) {
+                        console.error('Error updating order status:', error);
+                        toast.error('Ошибка при обновлении статуса заказа');
+                      }
+                    }}
+                    className="text-sm border rounded px-2 py-1"
+                  >
+                    <option value="pending">В обработке</option>
+                    <option value="confirmed">Подтвержден</option>
+                    <option value="preparing">Готовится</option>
+                    <option value="ready">Готов</option>
+                    <option value="delivering">Доставляется</option>
+                    <option value="delivered">Доставлен</option>
+                    <option value="cancelled">Отменен</option>
+                  </select>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-      <div className="mt-4">
-        <button className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" onClick={onUpdate}>
-          Обновить
-        </button>
       </div>
     </div>
   );
@@ -755,34 +862,48 @@ function OrdersSection({ orders, onUpdate }: { orders: Order[], onUpdate: () => 
 
 // Component for Payments section
 function PaymentsSection({ payments }: { payments: Payment[] }) {
-  const formatPrice = (price: number | string | null | undefined): string => {
-    if (price === null || price === undefined) return '0.00';
-    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
-    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
-  };
-
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Платежи</h2>
+      <h2 className="text-2xl font-bold mb-6">История платежей</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full">
+        <table className="min-w-full bg-white">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-6 py-3 text-left">ID Платежа</th>
-              <th className="px-6 py-3 text-left">ID Заказа</th>
-              <th className="px-6 py-3 text-left">Сумма</th>
-              <th className="px-6 py-3 text-left">Способ оплаты</th>
-              <th className="px-6 py-3 text-left">Дата</th>
+            <tr className="bg-gray-50">
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID платежа
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                ID заказа
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Сумма
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Способ оплаты
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Дата
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {payments.map((payment) => (
-              <tr key={payment.id} className="border-b">
-                <td className="px-6 py-4">{payment.id}</td>
-                <td className="px-6 py-4">{payment.order_id}</td>
-                <td className="px-6 py-4">${formatPrice(payment.amount)}</td>
-                <td className="px-6 py-4">{payment.payment_method === 'credit_card' ? 'Банковская карта' : payment.payment_method}</td>
-                <td className="px-6 py-4">{new Date(payment.created_at).toLocaleDateString('ru-RU')}</td>
+              <tr key={payment.id}>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  #{payment.id}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  #{payment.order_id}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  ₸{payment.amount.toFixed(2)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {payment.payment_method === 'credit_card' ? 'Банковская карта' : 'Наличные'}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {new Date(payment.created_at).toLocaleString('ru-RU')}
+                </td>
               </tr>
             ))}
           </tbody>

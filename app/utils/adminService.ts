@@ -88,6 +88,16 @@ export const adminService = {
     return response.json();
   },
 
+  updateUserRole: async (id: string, role: string) => {
+    const response = await fetch(`/api/users/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ role }),
+    });
+    if (!response.ok) throw new Error('Failed to update user role');
+    return response.json();
+  },
+
   // Order APIs
   getAllOrders: async () => {
     const response = await fetch('/api/orders/all');

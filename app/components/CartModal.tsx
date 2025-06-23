@@ -134,6 +134,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           <button 
             onClick={onClose}
             className="p-2 hover:bg-gray-100 rounded-full"
+            aria-label="Закрыть"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -145,57 +146,66 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         <div className="overflow-y-auto p-4" style={{ maxHeight: 'calc(80vh - 140px)' }}>
           {/* Cart Items */}
           <div className="space-y-4">
-            {items.map((item) => (
-              <div key={item.id} className="flex items-center gap-3 py-3 border-b">
-                {item.image && (
-                  <div className="relative w-14 h-14 flex-shrink-0">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      fill
-                      className="object-cover rounded"
-                    />
-                  </div>
-                )}
-                <div className="flex-grow">
-                  <div className="flex justify-between items-start">
-                    <h3 className="font-medium text-sm">{item.name}</h3>
-                    <button 
-                      onClick={() => handleRemoveItem(item.id)}
-                      className="text-gray-400 hover:text-red-600 p-1"
-                    >
-                      <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="flex justify-between items-center mt-1">
-                    <p className="text-gray-600 text-sm">₸{item.price.toFixed(2)}</p>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleQuantityChange(item.id, -1)}
-                        className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
+            {items.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                Ваша корзина пуста
+              </div>
+            ) : (
+              items.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 py-3 border-b">
+                  {item.image && (
+                    <div className="relative w-14 h-14 flex-shrink-0">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-grow">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-medium text-sm">{item.name}</h3>
+                      <button 
+                        onClick={() => handleRemoveItem(item.id)}
+                        className="text-gray-400 hover:text-red-600 p-1"
+                        aria-label="Удалить"
                       >
-                        -
+                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                       </button>
-                      <span className="text-sm w-4 text-center">{item.quantity}</span>
-                      <button
-                        onClick={() => handleQuantityChange(item.id, 1)}
-                        className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
-                      >
-                        +
-                      </button>
+                    </div>
+                    <div className="flex justify-between items-center mt-1">
+                      <p className="text-gray-600 text-sm">₸{item.price.toFixed(2)}</p>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleQuantityChange(item.id, -1)}
+                          className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
+                          aria-label="Уменьшить количество"
+                        >
+                          -
+                        </button>
+                        <span className="text-sm w-4 text-center">{item.quantity}</span>
+                        <button
+                          onClick={() => handleQuantityChange(item.id, 1)}
+                          className="text-gray-500 hover:text-red-600 w-6 h-6 flex items-center justify-center border rounded"
+                          aria-label="Увеличить количество"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           {/* Suggested Items */}
           {suggestedItems.length > 0 && (
             <div className="mt-6 pt-6 border-t">
-              <h3 className="font-medium text-sm mb-3">Вы можете также заказать</h3>
+              <h3 className="font-medium text-sm mb-3">Рекомендуемые товары</h3>
               <div className="space-y-3">
                 {suggestedItems.map((item) => (
                   <div key={item.id} className="flex items-center gap-3">
@@ -210,8 +220,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                       </div>
                     )}
                     <div className="flex-grow">
-                      <h4 className="text-sm font-medium">{item.name}</h4>
-                      <p className="text-sm text-gray-600">₸{item.price.toFixed(2)}</p>
+                      <h4 className="font-medium text-sm">{item.name}</h4>
+                      <p className="text-gray-600 text-sm">₸{item.price.toFixed(2)}</p>
                     </div>
                     <button
                       onClick={() => handleAddSuggested(item)}
@@ -227,14 +237,15 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="border-t bg-white p-4 rounded-b-lg">
-          <div className="flex justify-between mb-4">
-            <span className="font-semibold">Итог</span>
-            <span className="font-semibold">₸{calculateTotal().toFixed(2)}</span>
+        <div className="p-4 border-t bg-gray-50">
+          <div className="flex justify-between items-center mb-4">
+            <span className="font-medium">Итого:</span>
+            <span className="font-bold text-lg">₸{calculateTotal().toFixed(2)}</span>
           </div>
-          <button 
-            className="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 transition-colors"
+          <button
             onClick={handleCheckout}
+            className="w-full py-3 bg-red-600 text-white font-medium rounded-full hover:bg-red-700 transition-colors"
+            disabled={items.length === 0}
           >
             Оформить заказ
           </button>
