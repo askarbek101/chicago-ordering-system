@@ -126,6 +126,13 @@ const mockPayments: Payment[] = [
   // Add more mock payments...
 ];
 
+// Helper function for formatting prices
+const formatPrice = (price: number | string | null | undefined): string => {
+  if (price === null || price === undefined) return '0.00';
+  const numPrice = typeof price === 'string' ? parseFloat(price) : price;
+  return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
+};
+
 export default function AdminPage() {
   const { user, isLoaded } = useUser();
   const router = useRouter();
@@ -279,18 +286,23 @@ export default function AdminPage() {
 
       {/* Content */}
       <div className="container mx-auto px-4 py-8">
-        {activeTab === 'food' && <FoodSection foods={foods} categories={categories} onUpdate={fetchAllData} />}
+        {activeTab === 'food' && <FoodSection foods={foods} categories={categories} onUpdate={fetchAllData} formatPrice={formatPrice} />}
         {activeTab === 'categories' && <CategoriesSection categories={categories} onUpdate={fetchAllData} />}
         {activeTab === 'users' && <UsersSection users={users} onUpdate={fetchAllData} />}
-        {activeTab === 'orders' && <OrdersSection orders={orders} onUpdate={fetchAllData} />}
-        {activeTab === 'payments' && <PaymentsSection payments={payments} />}
+        {activeTab === 'orders' && <OrdersSection orders={orders} onUpdate={fetchAllData} formatPrice={formatPrice} />}
+        {activeTab === 'payments' && <PaymentsSection payments={payments} formatPrice={formatPrice} />}
       </div>
     </div>
   );
 }
 
 // Component for Food section
-function FoodSection({ foods, categories, onUpdate }: { foods: Food[], categories: Category[], onUpdate: () => Promise<void> }) {
+function FoodSection({ foods, categories, onUpdate, formatPrice }: { 
+  foods: Food[], 
+  categories: Category[], 
+  onUpdate: () => Promise<void>,
+  formatPrice: (price: number | string | null | undefined) => string 
+}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<FoodModalData>({
     name: '',
@@ -342,12 +354,6 @@ function FoodSection({ foods, categories, onUpdate }: { foods: Food[], categorie
     }
   };
 
-  const formatPrice = (price: number | string | null | undefined): string => {
-    if (price === null || price === undefined) return '0.00';
-    const numPrice = typeof price === 'string' ? parseFloat(price) : price;
-    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
-  };
-
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -375,7 +381,7 @@ function FoodSection({ foods, categories, onUpdate }: { foods: Food[], categorie
               <h3 className="text-lg font-semibold mb-2">{food.name}</h3>
               <p className="text-gray-600 text-sm mb-2">{food.description}</p>
               <div className="flex justify-between items-center">
-                <span className="font-bold">₸{food.price.toFixed(2)}</span>
+                <span className="font-bold">₸{formatPrice(food.price)}</span>
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleOpenModal(food)}
@@ -737,7 +743,11 @@ function UsersSection({ users, onUpdate }: { users: User[], onUpdate: () => Prom
 }
 
 // Component for Orders section
-function OrdersSection({ orders, onUpdate }: { orders: Order[], onUpdate: () => Promise<void> }) {
+function OrdersSection({ orders, onUpdate, formatPrice }: { 
+  orders: Order[], 
+  onUpdate: () => Promise<void>,
+  formatPrice: (price: number | string | null | undefined) => string 
+}) {
   const getStatusText = (status: string) => {
     switch (status) {
       case 'pending':
@@ -820,7 +830,7 @@ function OrdersSection({ orders, onUpdate }: { orders: Order[], onUpdate: () => 
                   {order.delivery_address}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ₸{order.total_price.toFixed(2)}
+                  ₸{formatPrice(order.total_price)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}>
@@ -861,7 +871,10 @@ function OrdersSection({ orders, onUpdate }: { orders: Order[], onUpdate: () => 
 }
 
 // Component for Payments section
-function PaymentsSection({ payments }: { payments: Payment[] }) {
+function PaymentsSection({ payments, formatPrice }: { 
+  payments: Payment[],
+  formatPrice: (price: number | string | null | undefined) => string 
+}) {
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">История платежей</h2>
@@ -896,7 +909,7 @@ function PaymentsSection({ payments }: { payments: Payment[] }) {
                   #{payment.order_id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ₸{payment.amount.toFixed(2)}
+                  ₸{formatPrice(payment.amount)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {payment.payment_method === 'credit_card' ? 'Банковская карта' : 'Наличные'}
